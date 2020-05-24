@@ -93,6 +93,7 @@
         <copy file="scripts/compile.sh" todir="${dir.global.workspace}/dist"></copy>
         <chmod perm="755" file="${dir.global.workspace}/dist/compile.sh"></chmod>
 
+<!--
         <javadoc
                  defaultexcludes="yes"
                  destdir="${dir.global.workspace}/dist/javadoc"
@@ -119,7 +120,7 @@
                 <include name="**/org/aion/avm/embed/package-info.java"/>
             </fileset>
         </javadoc>
-
+-->
         <copy todir="${dir.global.workspace}/dist/examples">
             <fileset dir="${dir.global.workspace}/org.aion.avm.embed/src/examples">
                 <include name="**/*.java"/>
@@ -148,7 +149,6 @@
         <ant inheritAll="false" antfile="${dir.global.workspace}/org.aion.avm.embed/build.xml" target="test">
             <property name="compile.debug" value="${compile.debug}"/>
         </ant>
-
 <!-- We want to test that the dist and example work, especially when AVM is embedded in a non-system classloader.
      (In the future, we might formalize this, but we will start with inline logic, here)
  -->
@@ -158,7 +158,7 @@
             </fileset>
         </copy>
         <chmod perm="755" file="${dir.global.build}/dist/compile.sh"></chmod>
-        <javac debug="true" debuglevel="source,lines,vars" includeantruntime="false" release="10"
+        <javac debug="true" debuglevel="source,lines,vars" includeantruntime="false" release="8"
                srcdir="${dir.global.workspace}/dist_test"
                excludes="**/package-info.java"
             destdir="${dir.global.workspace}/dist_test" includes="**/*.java">

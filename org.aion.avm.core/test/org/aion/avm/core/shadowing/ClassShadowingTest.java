@@ -24,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 public class ClassShadowingTest {
@@ -175,7 +176,7 @@ public class ClassShadowingTest {
     public void testUserClassInShadowNamespace() throws Exception {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         String className = PackageConstants.kShadowSlashPrefix + "Test";
-        writer.visit(54, Opcodes.ACC_PUBLIC, className, null, "java/lang/Object", new String[0]);
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, className, null, "java/lang/Object", new String[0]);
         byte[] inputBytes = writer.toByteArray();
         
         // Note that the ClassShadowing visitor will throw an assertion error when it sees something in PackageConstants.kShadowSlashPrefix
@@ -194,7 +195,7 @@ public class ClassShadowingTest {
     private NamespaceMapper createTestingMapper(String... userDotNameClasses) {
         // WARNING:  We are providing the class set as both the "classes only" and "classes plus interfaces" sets.
         // This works for this test but, in general, is not correct.
-        Set<String> userClassDotNameSet = Set.of(userDotNameClasses);
+        Set<String> userClassDotNameSet = Arrays.asList(userDotNameClasses).stream().collect(Collectors.toSet());
         return new NamespaceMapper(new PreRenameClassAccessRules(userClassDotNameSet, userClassDotNameSet));
     }
 
@@ -205,7 +206,7 @@ public class ClassShadowingTest {
         }
 
         // We will need to produce the constant class.
-        Collection<byte[]> inputClasses = Set.of(bytecode);
+        Collection<byte[]> inputClasses = Arrays.asList(bytecode).stream().collect(Collectors.toSet());
         ConstantClassBuilder.ConstantClassInfo constantClass = ConstantClassBuilder.buildConstantClassBytecodeForClasses(PackageConstants.kConstantClassName, inputClasses);
 
         Function<byte[], byte[]> transformer = (inputBytes) ->

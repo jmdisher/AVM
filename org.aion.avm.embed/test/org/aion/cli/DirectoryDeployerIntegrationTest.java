@@ -50,7 +50,7 @@ public class DirectoryDeployerIntegrationTest {
         Transaction transaction = AvmTransactionUtil.create(DEPLOYER, kernel.getNonce(DEPLOYER), BigInteger.ZERO, deployment, ENERGY_LIMIT, ENERGY_PRICE);
         TransactionResult result = avm.run(kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        AionAddress contractAddress = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddress = new AionAddress(result.copyOfTransactionOutput().get());
         String hexContract = Helpers.bytesToHexString(contractAddress.toByteArray());
         avm.shutdown();
         

@@ -33,7 +33,7 @@ public class AvmParallelTest {
 
         Transaction t0 = AvmTransactionUtil.call(preminedAddress, usr1, BigInteger.ZERO, BigInteger.valueOf(500_000), new byte[0], 100000L, 1);
         Transaction t1 = AvmTransactionUtil.call(preminedAddress, usr1, BigInteger.ONE, BigInteger.valueOf(500_000), new byte[0], 100000L, 1);
-        Transaction t2 = AvmTransactionUtil.call(preminedAddress, usr1, BigInteger.TWO, BigInteger.valueOf(500_000), new byte[0], 100000L, 1);
+        Transaction t2 = AvmTransactionUtil.call(preminedAddress, usr1, new BigInteger("2"), BigInteger.valueOf(500_000), new byte[0], 100000L, 1);
         Transaction t3 = AvmTransactionUtil.call(preminedAddress, usr1, BigInteger.valueOf(3), BigInteger.valueOf(500_000), new byte[0], 100000L, 1);
         Transaction t4 = AvmTransactionUtil.call(preminedAddress, usr1, BigInteger.valueOf(4), BigInteger.valueOf(500_000), new byte[0], 100000L, 1);
 
@@ -52,7 +52,7 @@ public class AvmParallelTest {
 
         t0 = AvmTransactionUtil.call(usr1, usr2, BigInteger.ZERO, BigInteger.valueOf(100_000), new byte[0], 100000L, 1);
         t1 = AvmTransactionUtil.call(usr1, usr2, BigInteger.ONE, BigInteger.valueOf(100_000), new byte[0], 100000L, 1);
-        t2 = AvmTransactionUtil.call(usr1, usr2, BigInteger.TWO, BigInteger.valueOf(100_000), new byte[0], 100000L, 1);
+        t2 = AvmTransactionUtil.call(usr1, usr2, new BigInteger("2"), BigInteger.valueOf(100_000), new byte[0], 100000L, 1);
         t3 = AvmTransactionUtil.call(usr1, usr2, BigInteger.valueOf(3), BigInteger.valueOf(100_000), new byte[0], 100000L, 1);
         t4 = AvmTransactionUtil.call(usr1, usr2, BigInteger.valueOf(4), BigInteger.valueOf(100_000), new byte[0], 100000L, 1);
 
@@ -133,7 +133,7 @@ public class AvmParallelTest {
 
         Transaction t0 = AvmTransactionUtil.call(preminedAddress, usr1, BigInteger.ZERO, BigInteger.valueOf(5_000_000), new byte[0], 100000L, 1);
         Transaction t1 = AvmTransactionUtil.call(preminedAddress, usr2, BigInteger.ONE, BigInteger.valueOf(5_000_000), new byte[0], 100000L, 1);
-        Transaction t2 = AvmTransactionUtil.call(preminedAddress, usr3, BigInteger.TWO, BigInteger.valueOf(5_000_000), new byte[0], 100000L, 1);
+        Transaction t2 = AvmTransactionUtil.call(preminedAddress, usr3, new BigInteger("2"), BigInteger.valueOf(5_000_000), new byte[0], 100000L, 1);
         Transaction t3 = AvmTransactionUtil.call(preminedAddress, usr4, BigInteger.valueOf(3), BigInteger.valueOf(15_000_000), new byte[0], 100000L, 1);
         Transaction t4 = AvmTransactionUtil.create(usr4, BigInteger.ZERO, BigInteger.ZERO, new CodeAndArguments(code, null).encodeToBytes(), 10_000_000L, 1);
 
@@ -144,7 +144,7 @@ public class AvmParallelTest {
         }
 
         TransactionResult res = results[4].getResult();
-        AionAddress contractAddr = new AionAddress(res.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddr = new AionAddress(res.copyOfTransactionOutput().get());
 
         byte[] args = encodeNoArgsMethodCall("doTransfer");
         byte[] args2 = encodeNoArgsMethodCall("addValue");
@@ -223,7 +223,7 @@ public class AvmParallelTest {
         FutureResult[] results = avm.run(kernel, ctx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         Transaction[] tx = new Transaction[results.length - 1];
@@ -252,7 +252,7 @@ public class AvmParallelTest {
 
         results = avm.run(kernel, tx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         for (FutureResult f : results) {
-            Assert.assertEquals(2, new ABIDecoder(f.getResult().copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(2, new ABIDecoder(f.getResult().copyOfTransactionOutput().get()).decodeOneInteger());
         }
 
         for (int i = 1; i < length - 1; i++) {
@@ -262,7 +262,7 @@ public class AvmParallelTest {
 
         results = avm.run(kernel, new Transaction[]{tx[1], tx[2], tx[3]}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         for (FutureResult f : results) {
-            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().get()).decodeOneInteger());
         }
 
         avm.shutdown();
@@ -288,7 +288,7 @@ public class AvmParallelTest {
         FutureResult[] results = avm.run(kernel, ctx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         Transaction[] tx = new Transaction[results.length - 1];
@@ -316,7 +316,7 @@ public class AvmParallelTest {
 
         results = avm.run(kernel, tx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         for (FutureResult f : results) {
-            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().get()).decodeOneInteger());
         }
 
         for (int i = 1; i < length - 1; i++) {
@@ -326,7 +326,7 @@ public class AvmParallelTest {
         Transaction[] batch = new Transaction[]{tx[1], tx[2]};
         results = avm.run(kernel, batch, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         for (FutureResult f : results) {
-            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().get()).decodeOneInteger());
         }
 
         avm.shutdown();
@@ -352,7 +352,7 @@ public class AvmParallelTest {
         FutureResult[] results = avm.run(kernel, ctx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
             kernel.setTransformedCode(contractAddresses[i], null);
         }
 
@@ -385,7 +385,7 @@ public class AvmParallelTest {
 
         results = avm.run(kernel, tx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         for (FutureResult f : results) {
-            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(1, new ABIDecoder(f.getResult().copyOfTransactionOutput().get()).decodeOneInteger());
         }
 
         avm.shutdown();
@@ -410,7 +410,7 @@ public class AvmParallelTest {
         FutureResult[] results = avm.run(kernel, ctx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         kernel.generateBlock();
@@ -442,9 +442,9 @@ public class AvmParallelTest {
         // Specifically tests the issue mentioned in AKI-644
         results = avm.run(kernel, tx, ExecutionType.MINING, kernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(BigInteger.ZERO, new ABIDecoder(results[0].getResult().copyOfTransactionOutput().orElseThrow()).decodeOneBigInteger());
+        Assert.assertEquals(BigInteger.ZERO, new ABIDecoder(results[0].getResult().copyOfTransactionOutput().get()).decodeOneBigInteger());
         Assert.assertEquals(initialBalance.add(BigInteger.valueOf(results[0].getResult().energyUsed)).add(BigInteger.valueOf(results[1].getResult().energyUsed)),
-                new ABIDecoder(results[2].getResult().copyOfTransactionOutput().orElseThrow()).decodeOneBigInteger());
+                new ABIDecoder(results[2].getResult().copyOfTransactionOutput().get()).decodeOneBigInteger());
 
         avm.shutdown();
     }

@@ -47,7 +47,7 @@ public class LoadedJarTest {
 
     private static void checkIfMatchExpected(Map<String, byte[]> actual) {
         Assert.assertEquals(expectedReadClasses.length, actual.size());
-        final var actualClassesArray = actual.keySet().toArray();
+        final Object[] actualClassesArray = actual.keySet().toArray();
         sort(actualClassesArray);
         Assert.assertArrayEquals(expectedReadClasses, actualClassesArray);
     }

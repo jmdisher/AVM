@@ -30,7 +30,7 @@ class IObjectReplacer {
     }
 
     String replaceMethodDescriptor(String methodDescriptor) {
-        StringBuilder sb = DescriptorParser.parse(methodDescriptor, new DescriptorParser.Callbacks<>() {
+        StringBuilder sb = DescriptorParser.parse(methodDescriptor, new DescriptorParser.Callbacks<StringBuilder>() {
             @Override
             public StringBuilder readObject(int arrayDimensions, String type, StringBuilder userData) {
                 populateArray(userData, arrayDimensions);

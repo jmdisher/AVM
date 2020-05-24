@@ -43,7 +43,7 @@ public class Blake2bTest {
         TransactionResult txResult = avm.run(this.kernel, new Transaction[] {tx}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         Assert.assertTrue(txResult.transactionStatus.isSuccess());
 
-        dappAddress = new AionAddress(txResult.copyOfTransactionOutput().orElseThrow());
+        dappAddress = new AionAddress(txResult.copyOfTransactionOutput().get());
         assertNotNull(dappAddress);
     }
 
@@ -61,6 +61,6 @@ public class Blake2bTest {
         TransactionResult txResult = avm.run(this.kernel, new Transaction[] {tx}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         Assert.assertTrue(txResult.transactionStatus.isSuccess());
 
-        assertArrayEquals(hash, txResult.copyOfTransactionOutput().orElseThrow());
+        assertArrayEquals(hash, txResult.copyOfTransactionOutput().get());
     }
 }

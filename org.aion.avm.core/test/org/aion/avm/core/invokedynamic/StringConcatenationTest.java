@@ -30,9 +30,11 @@ import org.junit.Test;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -65,29 +67,29 @@ public class StringConcatenationTest {
 
     @Test
     public void given_null_then_NullShouldBeConcatenated() throws Exception {
-        final var clazz = transformClass(IndyConcatenationTestResource.class);
-        final var actual = callMethod(clazz, "avm_concatWithDynamicArgs", null, null, null);
+        final Class<?> clazz = transformClass(IndyConcatenationTestResource.class);
+        final String actual = callMethod(clazz, "avm_concatWithDynamicArgs", null, null, null);
         Assert.assertEquals("nullnullnull", actual);
     }
 
     @Test
     public void given_nullReference_then_NullShouldBeConcatenated() throws Exception {
-        final var clazz = transformClass(IndyConcatenationTestResource.class);
-        final var actual = callMethod(clazz, "avm_nullReferenceConcat");
+        final Class<?> clazz = transformClass(IndyConcatenationTestResource.class);
+        final String actual = callMethod(clazz, "avm_nullReferenceConcat");
         Assert.assertEquals("null", actual);
     }
 
     @Test
     public void given_twoEmptyStrings_then_EmptyStringShouldBeReturned() throws Exception {
-        final var clazz = transformClass(IndyConcatenationTestResource.class);
-        final var actual = callMethod(clazz, "avm_emptyStringsConcat");
+        final Class<?> clazz = transformClass(IndyConcatenationTestResource.class);
+        final String actual = callMethod(clazz, "avm_emptyStringsConcat");
         Assert.assertEquals("", actual);
     }
 
     @Test
     public void given_stringConcatLambda_then_bootstrapMethodShouldBeShadowed() throws Exception {
-        final var clazz = transformClass(IndyConcatenationTestResource.class);
-        final var actual = callMethod(clazz, "avm_concatWithDynamicArgs",
+        final Class<?> clazz = transformClass(IndyConcatenationTestResource.class);
+        final String actual = callMethod(clazz, "avm_concatWithDynamicArgs",
                 new s.java.lang.String("a"),
                 new s.java.lang.String("b"),
                 new s.java.lang.String("c"));
@@ -96,8 +98,8 @@ public class StringConcatenationTest {
 
     @Test
     public void given_stringConcatLambda_then_bootstrapMethodShouldBeShadowed2() throws Exception {
-        final var clazz = transformClass(IndyConcatenationTestResource.class);
-        final var actual = callMethod(clazz, "avm_concatWithCharacters",
+        final Class<?> clazz = transformClass(IndyConcatenationTestResource.class);
+        final String actual = callMethod(clazz, "avm_concatWithCharacters",
                 new s.java.lang.String("a"),
                 new s.java.lang.String("b"),
                 new s.java.lang.String("c"));
@@ -106,16 +108,16 @@ public class StringConcatenationTest {
 
     @Test
     public void given_allPrimitives_then_shouldBeConcatenated() throws Exception {
-        final var clazz = transformClass(IndyConcatenationTestResource.class);
-        final var actual = callMethod(clazz, "avm_concatWithPrimtives");
+        final Class<?> clazz = transformClass(IndyConcatenationTestResource.class);
+        final String actual = callMethod(clazz, "avm_concatWithPrimtives");
         Assert.assertEquals("0121.10.0atrue3", actual);
     }
 
     private static String callMethod(Class<?> clazz,
                                      String methodName, s.java.lang.String... stringArgs) throws Exception {
-        final var instance = clazz.getDeclaredConstructor().newInstance();
-        final var method = clazz.getDeclaredMethod(methodName, getTypesFrom(stringArgs));
-        final var actual = (s.java.lang.String) method.invoke(instance, (Object[])stringArgs);
+        final Object instance = clazz.getDeclaredConstructor().newInstance();
+        final Method method = clazz.getDeclaredMethod(methodName, getTypesFrom(stringArgs));
+        final s.java.lang.String actual = (s.java.lang.String) method.invoke(instance, (Object[])stringArgs);
         return actual.getUnderlying();
     }
 
@@ -126,7 +128,7 @@ public class StringConcatenationTest {
     }
 
     private Class<?> transformClass(Class<?> clazz) throws Exception {
-        final var className = clazz.getName();
+        final String className = clazz.getName();
         final byte[] origBytecode = Utilities.loadRequiredResourceAsBytes(InvokedynamicUtils.getSlashClassNameFrom(className));
         
         Collection<byte[]> inputClasses = Collections.singleton(origBytecode);
@@ -135,9 +137,9 @@ public class StringConcatenationTest {
         final byte[] transformedBytecode = transformForStringConcatTest(origBytecode, className, PackageConstants.kConstantClassName, constantClass.constantToFieldMap);
         assertFalse(Arrays.equals(origBytecode, transformedBytecode));
         java.lang.String mappedClassName = DebugNameResolver.getUserPackageDotPrefix(className, StringConcatenationTest.preserveDebuggability);
-        Map<String, byte[]> allClasses = Map.of(mappedClassName, transformedBytecode
-                , PackageConstants.kConstantClassName, constantClass.bytecode
-        );
+        Map<String, byte[]> allClasses = new HashMap<>();
+        allClasses.put(mappedClassName, transformedBytecode);
+        allClasses.put(PackageConstants.kConstantClassName, constantClass.bytecode);
         Map<String, byte[]> classAndHelper = Helpers.mapIncludingHelperBytecode(allClasses, Helpers.loadDefaultHelperBytecode());
         AvmClassLoader dappLoader = NodeEnvironment.singleton.createInvocationClassLoader(classAndHelper);
         

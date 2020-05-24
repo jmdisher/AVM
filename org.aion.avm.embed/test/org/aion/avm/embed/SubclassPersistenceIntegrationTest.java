@@ -111,14 +111,14 @@ public class SubclassPersistenceIntegrationTest {
         byte[] txData = avmRule.getDappBytes(testClass, new byte[0]);
         TransactionResult createResult = avmRule.deploy(avmRule.getPreminedAccount(), BigInteger.ZERO, txData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        return new Address(createResult.copyOfTransactionOutput().orElseThrow());
+        return new Address(createResult.copyOfTransactionOutput().get());
     }
 
     private int callStaticReturnInteger(Address dapp, String methodName) {
         byte[] argData = ABIUtil.encodeMethodArguments(methodName);
         TransactionResult result = avmRule.call(avmRule.getPreminedAccount(), dapp, BigInteger.ZERO, argData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        return new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger();
+        return new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger();
     }
 
     private void failedInstall(Class<?> testClass) {

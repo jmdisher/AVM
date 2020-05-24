@@ -62,12 +62,6 @@ public final class Long extends Number implements Comparable<Long> {
         return java.lang.Long.parseLong(s.getUnderlying(), 10);
     }
 
-    public static long avm_parseLong(CharSequence s, int beginIndex, int endIndex, int radix)
-            throws NumberFormatException {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Long_avm_parseLong_2);
-        return java.lang.Long.parseLong(s.avm_toString().getUnderlying(), beginIndex, endIndex, radix);
-    }
-
     public static long avm_parseUnsignedLong(String s, int radix) throws NumberFormatException {
         IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Long_avm_parseUnsignedLong);
         return java.lang.Long.parseUnsignedLong(s.getUnderlying(), radix);
@@ -76,12 +70,6 @@ public final class Long extends Number implements Comparable<Long> {
     public static long avm_parseUnsignedLong(String s) throws NumberFormatException {
         IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Long_avm_parseUnsignedLong_1);
         return java.lang.Long.parseUnsignedLong(s.getUnderlying(), 10);
-    }
-
-    public static long avm_parseUnsignedLong(CharSequence s, int beginIndex, int endIndex, int radix)
-            throws NumberFormatException {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Long_avm_parseUnsignedLong_2);
-        return java.lang.Long.parseUnsignedLong(s.avm_toString().getUnderlying(), beginIndex, endIndex, radix);
     }
 
     public static Long avm_valueOf(String s, int radix) throws NumberFormatException {

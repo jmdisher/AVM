@@ -48,7 +48,7 @@ public class Utilities {
         byte[] raw = null;
         if (null != stream) {
             try {
-                raw = stream.readAllBytes();
+                raw = _stream_readAllBytes(stream);
             } catch (IOException e) {
                 // We treat this as a fatal error, within this simple utility class.
                 throw new AssertionError(e);
@@ -74,7 +74,7 @@ public class Utilities {
                 if (nameStyle.equals(NameStyle.DOT_NAME)) {
                     internalClassName = Utilities.internalNameToFulllyQualifiedName(internalClassName);
                 }
-                int readSize = jarReader.readNBytes(tempReadingBuffer, 0, tempReadingBuffer.length);
+                int readSize = _stream_readNBytes(jarReader, tempReadingBuffer);
 
                 if (0 != jarReader.available()) {
                     throw new RuntimeException("Class file too big: " + name);
@@ -101,9 +101,57 @@ public class Utilities {
         }
     }
 
+    public static byte[] stream_readAllBytes(InputStream stream) throws IOException {
+        return _stream_readAllBytes(stream);
+        
+    }
+
+    public static int stream_readNBytes(InputStream stream, byte[] buffer) throws IOException {
+        return _stream_readNBytes(stream, buffer);
+    }
+
     public enum NameStyle {
         DOT_NAME,
         SLASH_NAME,
         ;
+    }
+
+
+    private static byte[] _stream_readAllBytes(InputStream stream) throws IOException {
+        byte[] temp = new byte[MAX_CLASS_BYTES+1];
+        boolean done = false;
+        int readSize = 0;
+        while (!done) {
+            int didRead = stream.read(temp, readSize, temp.length - readSize);
+            if (-1 == didRead) {
+                done = true;
+            } else {
+                readSize += didRead;
+            }
+        }
+        if (temp.length == readSize) {
+            // Overflow.
+            throw new AssertionError("Overflow reading buffer");
+        }
+        byte[] raw = new byte[readSize];
+        System.arraycopy(temp, 0, raw, 0, readSize);
+        return raw;
+    }
+
+    private static int _stream_readNBytes(InputStream stream, byte[] buffer) throws IOException {
+        boolean done = false;
+        int readSize = 0;
+        while (!done) {
+            int didRead = stream.read(buffer, readSize, buffer.length - readSize);
+            if (-1 == didRead) {
+                done = true;
+            } else {
+                readSize += didRead;
+                if (buffer.length == readSize) {
+                    done = true;
+                }
+            }
+        }
+        return readSize;
     }
 }

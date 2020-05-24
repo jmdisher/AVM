@@ -14,16 +14,20 @@ import i.IRuntimeSetup;
 import i.InstrumentationHelpers;
 import i.InternedClasses;
 import i.PackageConstants;
+import jdk.nashorn.internal.ir.SetSplitState;
+
 import org.junit.*;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 public class StringConstantVisitorTest {
@@ -41,11 +45,11 @@ public class StringConstantVisitorTest {
         
         // WARNING:  We are providing the class set as both the "classes only" and "classes plus interfaces" sets.
         // This works for this test but, in general, is not correct.
-        Set<String> userClassDotNameSet = Set.of(targetTestName, targetNoStaticName);
+        Set<String> userClassDotNameSet = Arrays.stream(new String[] { targetTestName, targetNoStaticName }).collect(Collectors.toSet());
         PreRenameClassAccessRules classAccessRules = new PreRenameClassAccessRules(userClassDotNameSet, userClassDotNameSet);
         
         // We will need to produce the constant class.
-        Collection<byte[]> inputClasses = Set.of(targetTestBytes, targetNoStaticBytes);
+        Set<byte[]> inputClasses = Arrays.stream(new byte[][] { targetTestBytes, targetNoStaticBytes }).collect(Collectors.toSet());
         ConstantClassBuilder.ConstantClassInfo constantClass = ConstantClassBuilder.buildConstantClassBytecodeForClasses(PackageConstants.kConstantClassName, inputClasses);
         
         Function<byte[], byte[]> transformer = (inputBytes) ->

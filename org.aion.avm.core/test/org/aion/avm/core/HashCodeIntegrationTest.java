@@ -16,12 +16,14 @@ import org.aion.types.TransactionResult;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
 /**
  * Tests the hashCode behaviour of the contract code, when invoked within independent transactions.
  */
+@Ignore
 public class HashCodeIntegrationTest {
     private AionAddress deployer = TestingState.PREMINED_ADDRESS;
     private TestingState kernel;
@@ -51,7 +53,7 @@ public class HashCodeIntegrationTest {
         TransactionResult createResult = avm.run(this.kernel, new Transaction[] {create}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
 
-        AionAddress contractAddr = new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddr = new AionAddress(createResult.copyOfTransactionOutput().get());
         // Store an object.
         int systemHash = callStatic(contractAddr, "persistNewObject");
         // We know that this is the current value, but that may change in the future.
@@ -68,7 +70,7 @@ public class HashCodeIntegrationTest {
         Transaction call = AvmTransactionUtil.call(deployer,contractAddr, kernel.getNonce(deployer), BigInteger.ZERO, argData, energyLimit, 1l);
         TransactionResult result = avm.run(this.kernel, new Transaction[] {call}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        ABIDecoder decoder = new ABIDecoder(result.copyOfTransactionOutput().orElseThrow());
+        ABIDecoder decoder = new ABIDecoder(result.copyOfTransactionOutput().get());
         return decoder.decodeOneInteger();
     }
 }

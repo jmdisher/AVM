@@ -123,12 +123,12 @@ public class TransactionalStateTest {
         transaction.deleteAccount(address);
         Assert.assertEquals(BigInteger.ONE, base.getBalance(address));
         Assert.assertEquals(BigInteger.ZERO, transaction.getBalance(address));
-        transaction.adjustBalance(address, BigInteger.TWO);
-        Assert.assertEquals(BigInteger.TWO, transaction.getBalance(address));
+        transaction.adjustBalance(address, new BigInteger("2"));
+        Assert.assertEquals(new BigInteger("2"), transaction.getBalance(address));
         
         // Now, commit and prove it is all written back.
         transaction.commit();
-        Assert.assertEquals(BigInteger.TWO, base.getBalance(address));
+        Assert.assertEquals(new BigInteger("2"), base.getBalance(address));
     }
 
     @Test
@@ -146,12 +146,12 @@ public class TransactionalStateTest {
         transaction.incrementNonce(nonceZero);
         
         // Make sure that these are correct in the transaction cache.
-        Assert.assertEquals(BigInteger.TWO, transaction.getNonce(nonceOne));
+        Assert.assertEquals(new BigInteger("2"), transaction.getNonce(nonceOne));
         Assert.assertEquals(BigInteger.ONE, transaction.getNonce(nonceZero));
         
         // Now, commit and observe the nonces are correctly incremented to 2 and 1, respectively.
         transaction.commit();
-        Assert.assertEquals(BigInteger.TWO, base.getNonce(nonceOne));
+        Assert.assertEquals(new BigInteger("2"), base.getNonce(nonceOne));
         Assert.assertEquals(BigInteger.ONE, base.getNonce(nonceZero));
     }
 

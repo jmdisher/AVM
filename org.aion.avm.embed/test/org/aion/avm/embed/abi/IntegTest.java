@@ -35,7 +35,7 @@ public class IntegTest {
                         ENERGY_PRICE)
                         .getTransactionResult();
         assertTrue(createResult.transactionStatus.isSuccess());
-        return new Address(createResult.copyOfTransactionOutput().orElseThrow());
+        return new Address(createResult.copyOfTransactionOutput().get());
     }
 
     private boolean callStaticBoolean(Address dapp, String methodName, Object... arguments) {
@@ -70,7 +70,7 @@ public class IntegTest {
                         ENERGY_PRICE)
                         .getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return result.copyOfTransactionOutput().orElseThrow();
+        return result.copyOfTransactionOutput().get();
     }
 
     private void balanceTransfer(Address dapp) {
@@ -84,7 +84,7 @@ public class IntegTest {
                 ENERGY_PRICE)
                 .getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        assertArrayEquals(new byte[0], result.copyOfTransactionOutput().orElseThrow());
+        assertArrayEquals(new byte[0], result.copyOfTransactionOutput().get());
     }
 
     //Simplest case.

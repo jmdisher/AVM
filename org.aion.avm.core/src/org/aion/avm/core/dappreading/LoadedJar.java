@@ -78,7 +78,7 @@ public class LoadedJar {
                     // replaceAll gives us the regex so we use "$".
                     String internalClassName = name.replaceAll(".class$", "");
                     String qualifiedClassName = Utilities.internalNameToFulllyQualifiedName(internalClassName);
-                    int readSize = jarReader.readNBytes(tempReadingBuffer, 0, tempReadingBuffer.length);
+                    int readSize = Utilities.stream_readNBytes(jarReader, tempReadingBuffer);
                     // Now, copy this part of the array as a correctly-sized classBytes.
                     byte[] classBytes = new byte[readSize];
                     if (0 != jarReader.available()) {

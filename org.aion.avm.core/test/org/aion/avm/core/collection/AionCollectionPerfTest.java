@@ -65,7 +65,7 @@ public class AionCollectionPerfTest {
         AvmImpl avm = CommonAvmFactory.buildAvmInstanceForConfiguration(new EmptyCapabilities(), new AvmConfiguration());
 
         TransactionResult deployRes = deploy(externalState, avm, buildListPerfJar());
-        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().orElseThrow());
+        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().get());
 
         args = encodeNoArgsMethodCall("callInit");
         TransactionResult initResult = call(externalState, avm, contract, from, args);
@@ -101,7 +101,7 @@ public class AionCollectionPerfTest {
         AvmImpl avm = CommonAvmFactory.buildAvmInstanceForConfiguration(new EmptyCapabilities(), new AvmConfiguration());
 
         TransactionResult deployRes = deploy(externalState, avm, buildSetPerfJar());
-        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().orElseThrow());
+        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().get());
 
         args = encodeNoArgsMethodCall("callInit");
         TransactionResult initResult = call(externalState, avm, contract, from, args);
@@ -153,7 +153,7 @@ public class AionCollectionPerfTest {
         AvmImpl avm = CommonAvmFactory.buildAvmInstanceForConfiguration(new EmptyCapabilities(), new AvmConfiguration());
 
         TransactionResult deployRes = deploy(externalState, avm, buildMapPerfJar());
-        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().orElseThrow());
+        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().get());
 
         args = encodeNoArgsMethodCall("callInit");
         TransactionResult initResult = call(externalState, avm, contract, from, args);

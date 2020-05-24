@@ -547,6 +547,6 @@ public class BigDecimalStringConstructorTest {
         Transaction transaction = AvmTransactionUtil.create(DEPLOYER, kernel.getNonce(DEPLOYER), BigInteger.ZERO, jar, 5_000_000, 1);
         TransactionResult result = avm.run(kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 }

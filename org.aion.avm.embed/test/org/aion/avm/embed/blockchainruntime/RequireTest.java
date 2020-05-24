@@ -93,7 +93,7 @@ public class RequireTest {
         byte[] jar = getRawJarBytesForRequireContract(new byte[0]);
         TransactionResult result = avmRule.deploy(from, BigInteger.ZERO, jar, energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        contract = new Address(result.copyOfTransactionOutput().orElseThrow());
+        contract = new Address(result.copyOfTransactionOutput().get());
     }
 
     private TransactionResult callContractRequireMethod(boolean condition) {
@@ -111,7 +111,7 @@ public class RequireTest {
 
         TransactionResult result = avmRule.deploy(from, BigInteger.ZERO, jar, energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new Address(result.copyOfTransactionOutput().orElseThrow());
+        return new Address(result.copyOfTransactionOutput().get());
     }
 
     private TransactionResult callRedirectContract(Address redirect, boolean condition) {

@@ -318,7 +318,7 @@ public class ArrayNameMapper {
     }
 
     private static String mapDescriptor(String descriptor) {
-        StringBuilder builder = DescriptorParser.parse(descriptor, new DescriptorParser.Callbacks<>() {
+        StringBuilder builder = DescriptorParser.parse(descriptor, new DescriptorParser.Callbacks<StringBuilder>() {
             @Override
             public StringBuilder readObject(int arrayDimensions, String type, StringBuilder userData) {
                 if (arrayDimensions > 0) {

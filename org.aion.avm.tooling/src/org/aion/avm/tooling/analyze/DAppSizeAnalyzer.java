@@ -18,7 +18,7 @@ public class DAppSizeAnalyzer {
         }
 
         try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
-            analyze(fileInputStream.readAllBytes());
+            analyze(Utilities.stream_readAllBytes(fileInputStream));
 
         } catch (IOException e) {
             e.printStackTrace();

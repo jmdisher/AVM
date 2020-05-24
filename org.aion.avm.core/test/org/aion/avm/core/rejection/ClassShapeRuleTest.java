@@ -160,7 +160,7 @@ public class ClassShapeRuleTest {
 
     private static byte[] createNoopClass(String className, int instructionCount) {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        writer.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
         MethodVisitor method = writer.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "()[B", null, null);
         for (int i = 0; i < (instructionCount - 2); ++i) {
             method.visitInsn(Opcodes.NOP);
@@ -178,7 +178,7 @@ public class ClassShapeRuleTest {
         Assert.assertTrue(catchDepth >= 1);
         
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        writer.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
         // To test on filesystem, use "([Ljava/lang/String;)V".
         MethodVisitor method = writer.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "()[B", null, null);
         Label start = new Label();
@@ -216,7 +216,7 @@ public class ClassShapeRuleTest {
         Assert.assertTrue(pushCount >= 2);
         
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        writer.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
         MethodVisitor method = writer.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "()[B", null, null);
         Object oneLong = Long.valueOf(1L);
         Object oneInt = Integer.valueOf(1);
@@ -247,7 +247,7 @@ public class ClassShapeRuleTest {
 
     private static byte[] createVarHeavyClass(String className, int varCount, boolean isLong) {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        writer.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
         MethodVisitor method = writer.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "()[B", null, null);
         Object oneLong = Long.valueOf(1L);
         Object oneInt = Integer.valueOf(1);
@@ -281,7 +281,7 @@ public class ClassShapeRuleTest {
         String methodPrefix = "method_";
         String methodDescriptor = "()V";
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        writer.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
         MethodVisitor method = writer.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "()[B", null, null);
         for (int i = 0; i < (methodCount - 1); ++i) {
             String methodName = methodPrefix + i;
@@ -304,7 +304,7 @@ public class ClassShapeRuleTest {
 
     private static byte[] createConstantHeavyClass(String className, int constantCount) {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-        writer.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, className, null, "java/lang/Object", new String[0]);
         MethodVisitor method = writer.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "main", "()[B", null, null);
         // Note that we don't want to hit the method size limit so restrict this to 1000 constants per method.
         int constantsPerMethod = 1000;
@@ -357,7 +357,7 @@ public class ClassShapeRuleTest {
         
         // If the deployment was a success, we also want to send a basic call which should always succeed.
         if (didDeploy) {
-            AionAddress contractAddress = new AionAddress(deploymentResult.copyOfTransactionOutput().orElseThrow());
+            AionAddress contractAddress = new AionAddress(deploymentResult.copyOfTransactionOutput().get());
             Transaction callTransaction = AvmTransactionUtil.call(DEPLOYER, contractAddress, kernel.getNonce(DEPLOYER), BigInteger.ZERO, new byte[0], energyLimit, energyPrice);
             TransactionResult result = avm.run(kernel, new Transaction[] {callTransaction}, ExecutionType.ASSUME_MAINCHAIN, 0)[0].getResult();
             Assert.assertTrue(result.transactionStatus.isSuccess());

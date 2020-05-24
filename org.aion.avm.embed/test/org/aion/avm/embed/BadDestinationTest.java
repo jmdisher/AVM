@@ -96,7 +96,7 @@ public class BadDestinationTest {
 
         TransactionResult result = avmRule.deploy(from, BigInteger.ZERO, jar, energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        contract = new Address(result.copyOfTransactionOutput().orElseThrow());
+        contract = new Address(result.copyOfTransactionOutput().get());
     }
 
     private TransactionResult callContractWithoutCatchingException(Address callAddress) {

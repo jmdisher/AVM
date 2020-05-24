@@ -209,10 +209,15 @@ public class Blake2bPersonalizationTest {
 
         for (int i = 0; i < lenIndices; i = i + Integer.BYTES) {
             for (int j = 0; j < lenIndices; j = j + Integer.BYTES) {
-                if (Arrays.compare(
-                        Arrays.copyOfRange(a.getHash(), len + i, len + i + Integer.BYTES),
-                        Arrays.copyOfRange(b.getHash(), len + j, len + j + Integer.BYTES))
-                        == 0) {
+                byte[] fragment1 = Arrays.copyOfRange(a.getHash(), len + i, len + i + Integer.BYTES);
+                byte[] fragment2 = Arrays.copyOfRange(b.getHash(), len + j, len + j + Integer.BYTES);
+                boolean match = true;
+                for (int k = 0; match && (k < fragment1.length); ++k) {
+                    if (fragment1[k] != fragment2[k]) {
+                        match = false;
+                    }
+                }
+                if (match) {
                     return false;
                 }
             }

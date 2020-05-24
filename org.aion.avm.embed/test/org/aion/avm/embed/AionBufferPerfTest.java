@@ -55,7 +55,7 @@ public class AionBufferPerfTest {
         AvmImpl avm = CommonAvmFactory.buildAvmInstanceForConfiguration(new StandardCapabilities(), new AvmConfiguration());
 
         TransactionResult deployRes = deploy(kernel, avm, buildBufferPerfJar());
-        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().orElseThrow());
+        AionAddress contract = new AionAddress(deployRes.copyOfTransactionOutput().get());
 
         args = ABIUtil.encodeMethodArguments("callPutByte");
         TransactionResult putByteResult = call(kernel, avm, contract, from, args);

@@ -137,7 +137,7 @@ public class InternalCallClinitAddressesTest {
     private static Address deployInternalCallClinitAddressTrackerContract() {
         TransactionResult result = avmRule.deploy(from, BigInteger.ZERO, getDappBytes(), energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new Address(result.copyOfTransactionOutput().orElseThrow());
+        return new Address(result.copyOfTransactionOutput().get());
     }
 
     private Address[] callInternalCallClinitAddressesContract(Address contract, int numInternalCalls, boolean recurseFirst) {
@@ -152,7 +152,7 @@ public class InternalCallClinitAddressesTest {
 
         TransactionResult result = avmRule.call(from, contract, BigInteger.ZERO, callData, energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneAddressArray();
+        return new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneAddressArray();
     }
 
     private static byte[] getDappBytes() {

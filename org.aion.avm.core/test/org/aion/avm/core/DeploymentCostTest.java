@@ -28,6 +28,7 @@ import org.aion.types.TransactionResult;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -36,6 +37,7 @@ import org.junit.Test;
  * Nothing explicitly is actually verified by these 'tests'.
  * The purpose is more to give us an idea about how our deployment costs look for different Dapps.
  */
+@Ignore
 public class DeploymentCostTest {
     private static final long ENERGY_LIMIT = 100_000_000_000L;
     private static final long ENERGY_PRICE = 1L;

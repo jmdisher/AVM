@@ -92,7 +92,7 @@ public class DeploymentArgumentTest {
         TransactionResult result = deployContract(encodedArguments);
         Assert.assertTrue(result.transactionStatus.isSuccess());
 
-        AionAddress target = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        AionAddress target = new AionAddress(result.copyOfTransactionOutput().get());
         TransactionResult callResult = callContract(target, "correctDeployment");
         Assert.assertTrue(callResult.transactionStatus.isSuccess());
     }
@@ -109,7 +109,7 @@ public class DeploymentArgumentTest {
         TransactionResult result = deployContract(encodedArguments);
         Assert.assertTrue(result.transactionStatus.isSuccess());
 
-        AionAddress target = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        AionAddress target = new AionAddress(result.copyOfTransactionOutput().get());
         TransactionResult callResult = callContract(target, "incorrectDeployment");
         // (note that this is still a success since the call expects to fail, internally)
         Assert.assertTrue(callResult.transactionStatus.isSuccess());

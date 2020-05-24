@@ -170,12 +170,13 @@ public class NodeEnvironment {
 
         // Create the constant map.
         this.constantMap = Collections.unmodifiableMap(ConstantsHolder.getConstants());
-        RuntimeAssertionError.assertTrue(this.constantMap.size() == 34);
+        // Standard AVM is 34 but we don't have BigInteger.TWO.
+        RuntimeAssertionError.assertTrue(this.constantMap.size() == 33);
 
         // create the object size look-up maps
         Map<String, Integer> rtObjectSizeMap = computeRuntimeObjectSizes();
         // This is to ensure the JCLAndAPIHeapInstanceSize is updated with the correct instance size of a newly added JCL or API class
-        RuntimeAssertionError.assertTrue(rtObjectSizeMap.size() == 95);
+        RuntimeAssertionError.assertTrue(rtObjectSizeMap.size() == 93);
 
         Map<String, Integer> shadowObjectSizeMap = new HashMap<>(); // pre-rename; shadow objects and exceptions
         Map<String, Integer> apiObjectSizeMap = new HashMap<>(); // post-rename; API objects
@@ -415,7 +416,7 @@ public class NodeEnvironment {
             try {
                 String name = clazz.getName();
                 InputStream bytecode = clazz.getClassLoader().getResourceAsStream(name.replaceAll("\\.", "/") + ".class");
-                classBytesByQualifiedNames.put(name, bytecode.readAllBytes());
+                classBytesByQualifiedNames.put(name, Utilities.stream_readAllBytes(bytecode));
             } catch (IOException e) {
                 RuntimeAssertionError.unexpected(e);
             }

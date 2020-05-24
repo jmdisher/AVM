@@ -1,6 +1,7 @@
 package org.aion.avm.core.miscvisitors;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.aion.avm.core.ConstantClassBuilder;
@@ -34,7 +35,7 @@ public class ConstantVisitorTest {
         ClassWriter writer = new ClassWriter(0);
         ConstantVisitor visitor = new ConstantVisitor(constantClassName, constantClass.constantToFieldMap);
         visitor.setDelegate(writer);
-        visitor.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
+        visitor.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
         
         // Write the <clinit>.
         MethodVisitor methodVisitor = visitor.visitMethod(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null);
@@ -52,9 +53,9 @@ public class ConstantVisitorTest {
         byte[] bytecode = writer.toByteArray();
         // Get the class and make sure there are no issues.  Note that this would fail in our old implementation (duplicate <clinit>).
         byte[] stubBytecode = Utilities.loadRequiredResourceAsBytes(HelperStub.CLASS_NAME + ".class");
-        Map<String, byte[]> classes = Map.of(testClassName, bytecode
-                , constantClassName, constantClass.bytecode
-        );
+        Map<String, byte[]> classes = new HashMap<>();
+        classes.put(testClassName, bytecode);
+        classes.put(constantClassName, constantClass.bytecode);
         Map<String, byte[]> classesAndHelper = Helpers.mapIncludingHelperBytecode(classes, stubBytecode);
         AvmClassLoader loader = NodeEnvironment.singleton.createInvocationClassLoader(classesAndHelper);
         Assert.assertEquals(0, TestHelpers.wrapAsStringCounter);

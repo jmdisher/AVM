@@ -89,7 +89,7 @@ public class AssertKeywordIntegrationTest {
         // Deploy.
         TransactionResult createResult = avmRule.deploy(avmRule.getPreminedAccount(), BigInteger.ZERO, txData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        return new Address(createResult.copyOfTransactionOutput().orElseThrow());
+        return new Address(createResult.copyOfTransactionOutput().get());
     }
 
     private int callStaticInteger(Address dapp, String methodName, Object... arguments) {
@@ -106,6 +106,6 @@ public class AssertKeywordIntegrationTest {
         byte[] argData = ABIUtil.encodeMethodArguments(methodName, arguments);
         TransactionResult result = avmRule.call(avmRule.getPreminedAccount(), dapp, BigInteger.ZERO, argData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        return result.copyOfTransactionOutput().orElseThrow();
+        return result.copyOfTransactionOutput().get();
     }
 }

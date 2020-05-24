@@ -30,10 +30,10 @@ public class ManipulateCreateAndCallResultsTest {
         TransactionResult result = avmRule.deploy(deployer, BigInteger.ZERO, jar, 5_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
 
-        byte[] originalAddress = Arrays.copyOf(result.copyOfTransactionOutput().orElseThrow(), 32);
+        byte[] originalAddress = Arrays.copyOf(result.copyOfTransactionOutput().get(), 32);
 
         // Modify the returned byte array.
-        byte[] manipulatedAddress = result.copyOfTransactionOutput().orElseThrow();
+        byte[] manipulatedAddress = result.copyOfTransactionOutput().get();
         manipulatedAddress[0] = (byte) ~manipulatedAddress[0];
 
         avmRule.kernel.generateBlock();
@@ -45,7 +45,7 @@ public class ManipulateCreateAndCallResultsTest {
         byte[] data = ABIUtil.encodeMethodArguments("getAddress");
         result = avmRule.call(deployer, contract, BigInteger.ZERO, data, 2_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        assertArrayEquals(originalAddress, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray());
+        assertArrayEquals(originalAddress, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneByteArray());
 
         // No such contract is found at the manipulated address
         data = ABIUtil.encodeMethodArguments("getAddress");
@@ -60,14 +60,14 @@ public class ManipulateCreateAndCallResultsTest {
         byte[] jar = avmRule.getDappBytes(ManipulateFieldTarget.class, new byte[0]);
         TransactionResult result = avmRule.deploy(deployer, BigInteger.ZERO, jar, 5_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        Address fieldContract = new Address(result.copyOfTransactionOutput().orElseThrow());
+        Address fieldContract = new Address(result.copyOfTransactionOutput().get());
 
         // Deploy the dapp that will query the other dapp's field and try to modify it.
         avmRule.kernel.generateBlock();
         jar = avmRule.getDappBytes(DappManipulator.class, new byte[0]);
         result = avmRule.deploy(deployer, BigInteger.ZERO, jar, 5_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        Address contract = new Address(result.copyOfTransactionOutput().orElseThrow());
+        Address contract = new Address(result.copyOfTransactionOutput().get());
 
         // Call the method that does the manipulation. If it succeeds then nothing was modified.
         avmRule.kernel.generateBlock();
@@ -83,7 +83,7 @@ public class ManipulateCreateAndCallResultsTest {
         byte[] jar = avmRule.getDappBytes(DappManipulator.class, new byte[0]);
         TransactionResult result = avmRule.deploy(deployer, BigInteger.ZERO, jar, 5_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        Address contract = new Address(result.copyOfTransactionOutput().orElseThrow());
+        Address contract = new Address(result.copyOfTransactionOutput().get());
 
         // Call the method that does the manipulation. If it succeeds then nothing was modified.
         avmRule.kernel.generateBlock();
@@ -94,12 +94,12 @@ public class ManipulateCreateAndCallResultsTest {
 
         // Make a call into the other dapp to verify it exists & its address was not modified.
         avmRule.kernel.generateBlock();
-        Address otherDappOriginalAddress = new Address(new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray());
+        Address otherDappOriginalAddress = new Address(new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneByteArray());
         data = ABIUtil.encodeMethodArguments("getField");
         result = avmRule.call(deployer, otherDappOriginalAddress, BigInteger.ZERO, data, 2_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
 
         // Verify that we can call the 'getField' method of the deployed contract.
-        assertArrayEquals(new byte[20], new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray());
+        assertArrayEquals(new byte[20], new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneByteArray());
     }
 }

@@ -93,7 +93,7 @@ public class CryptoUtilMethodFeeBenchmarkTest {
         this.kernel = new TestingState();
         this.avm = CommonAvmFactory.buildAvmInstanceForConfiguration(new StandardCapabilities(), new AvmConfiguration());
         Transaction tx = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, txData, energyLimit, energyPrice);
-        dappAddress = new AionAddress(avm.run(this.kernel, new Transaction[] {tx}, ExecutionType.ASSUME_MAINCHAIN, 0)[0].getResult().copyOfTransactionOutput().orElseThrow());
+        dappAddress = new AionAddress(avm.run(this.kernel, new Transaction[] {tx}, ExecutionType.ASSUME_MAINCHAIN, 0)[0].getResult().copyOfTransactionOutput().get());
         Assert.assertNotNull(dappAddress);
     }
 

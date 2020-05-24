@@ -30,7 +30,7 @@ public class JarOptimizer {
         JarOptimizer optimizer = new JarOptimizer(false);
 
         try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
-            byte[] optimizedJarBytes = optimizer.optimize(fileInputStream.readAllBytes());
+            byte[] optimizedJarBytes = optimizer.optimize(Utilities.stream_readAllBytes(fileInputStream));
 
             int pathLength = args[0].lastIndexOf("/") + 1;
             String outputJarName = args[0].substring(0, pathLength) + "minimized_" + args[0].substring(pathLength);

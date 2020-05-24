@@ -110,7 +110,7 @@ public class InvokedynamicShadower extends ClassToolchain.ToolChainClassVisitor 
         }
 
         private Object[] newShadowLambdaArgsFrom(Object[] origArgs) {
-            final var newArgs = new ArrayList<>(origArgs.length);
+            final ArrayList<Object> newArgs = new ArrayList<>(origArgs.length);
             for (final Object origArg : origArgs) {
                 final Object newArg;
                 if (origArg instanceof Type) {

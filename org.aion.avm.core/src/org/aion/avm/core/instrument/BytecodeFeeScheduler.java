@@ -138,7 +138,7 @@ public class BytecodeFeeScheduler {
      * See {@linktourl https://github.com/aionnetworkp/aion_vm/wiki/Java-Bytecode-fee-schedule}
      */
     public void initialize() {
-        feeScheduleMap = new HashMap<>() {{
+        feeScheduleMap = new HashMap<Integer, BytecodeFeeInfo>() {{
             // NOP
             put(Opcodes.NOP, new BytecodeFeeInfo(BytecodeEnergyLevels.ZERO, BytecodeEnergyLevels.ZERO, 0, 0, 0));
 

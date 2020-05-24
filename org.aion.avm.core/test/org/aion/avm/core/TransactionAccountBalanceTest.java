@@ -312,7 +312,7 @@ public class TransactionAccountBalanceTest {
         long energyUsed = result.energyUsed;
         assertTrue(energyUsed > 0);
 
-        AionAddress destination = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        AionAddress destination = new AionAddress(result.copyOfTransactionOutput().get());
         assertEquals(BigInteger.ZERO, kernel.getBalance(destination));
     }
 
@@ -324,7 +324,7 @@ public class TransactionAccountBalanceTest {
         long energyUsed = result.energyUsed;
         assertTrue(energyUsed > 0);
 
-        AionAddress destination = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        AionAddress destination = new AionAddress(result.copyOfTransactionOutput().get());
         assertEquals(value, kernel.getBalance(destination));
     }
 
@@ -380,7 +380,7 @@ public class TransactionAccountBalanceTest {
     private AionAddress deployContractAndGetAddress() {
         TransactionResult result = deployContract(BigInteger.ZERO);
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private TransactionResult callContract(AionAddress contract, BigInteger value) {

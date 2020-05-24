@@ -120,7 +120,7 @@ public class HotObjectContract {
     public static void makeCallAndFail(Address callee, byte[] data) {
         Blockchain.call(callee, BigInteger.ZERO, data, 1000000);
         for(int i =0; i < 10000; i++){
-            BigInteger.valueOf(100).sqrt();
+            BigInteger.valueOf(100).divide(BigInteger.TEN);
         }
     }
 

@@ -12,7 +12,6 @@ import org.aion.avm.tooling.abi.Callable;
 public class ShadowClassConstantsTarget {
     private static BigInteger bigZero = BigInteger.ZERO;
     private static BigInteger bigOne = BigInteger.ONE;
-    private static BigInteger bigTwo = BigInteger.TWO;
     private static BigInteger bigTen = BigInteger.TEN;
     private static RoundingMode roundUp = RoundingMode.UP;
     private static RoundingMode roundDown = RoundingMode.DOWN;
@@ -58,11 +57,6 @@ public class ShadowClassConstantsTarget {
         Blockchain.require(bigOne.equals(BigInteger.ONE));
         Blockchain.require(bigOne != BigInteger.valueOf(1));
         Blockchain.require(bigOne.equals(BigInteger.valueOf(1)));
-
-        Blockchain.require(bigTwo == BigInteger.TWO);
-        Blockchain.require(bigTwo.equals(BigInteger.TWO));
-        Blockchain.require(bigTwo != BigInteger.valueOf(2));
-        Blockchain.require(bigTwo.equals(BigInteger.valueOf(2)));
 
         Blockchain.require(bigTen == BigInteger.TEN);
         Blockchain.require(bigTen.equals(BigInteger.TEN));

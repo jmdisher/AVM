@@ -46,7 +46,7 @@ public class TestResource {
         ret = ret && (RoundingMode.HALF_UP == RoundingMode.valueOf("HALF_UP"));
         ret = ret && (RoundingMode.CEILING instanceof Object);
 
-        RoundingMode[] es = (RoundingMode[]) RoundingMode.values();
+        RoundingMode[] es = RoundingMode.values();
         ret = ret && (es[0] == RoundingMode.UP);
         ret = ret && (es[1] == RoundingMode.DOWN);
         ret = ret && (es[2] == RoundingMode.CEILING);
@@ -65,7 +65,7 @@ public class TestResource {
         ret = ret && (TimeUnit.DAYS == TimeUnit.valueOf("DAYS"));
         ret = ret && (TimeUnit.HOURS instanceof Object);
 
-        TimeUnit[] es = (TimeUnit[]) TimeUnit.values();
+        TimeUnit[] es = TimeUnit.values();
         ret = ret && (es[0] == TimeUnit.DAYS);
         ret = ret && (es[1] == TimeUnit.HOURS);
         ret = ret && (es[2] == TimeUnit.MINUTES);

@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -80,7 +81,7 @@ public class UserlibCollisionTest {
         ClassWriter classWriter = new ClassWriter(0);
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "java/lang/MyClass", null, "java/lang/Object", null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "java/lang/MyClass", null, "java/lang/Object", null);
 
         classWriter.visitSource("MyClass.java", null);
         {
@@ -105,7 +106,7 @@ public class UserlibCollisionTest {
         ClassWriter classWriter = new ClassWriter(0);
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "avm/Main", null, "java/lang/Object", null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "avm/Main", null, "java/lang/Object", null);
 
         classWriter.visitSource("Main.java", null);
         {

@@ -44,7 +44,7 @@ public class DeploymentNonDefaultConditionTest {
         byte[] txData = new CodeAndArguments(jar, new byte[0]).encodeToBytes();
         TransactionResult result = deploy(deployer, kernel, txData, BigInteger.ZERO);
         assertTrue(result.transactionStatus.isSuccess());
-        AionAddress dappAddress = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        AionAddress dappAddress = new AionAddress(result.copyOfTransactionOutput().get());
 
         kernel.generateBlock();
 
@@ -141,7 +141,7 @@ public class DeploymentNonDefaultConditionTest {
         byte[] txData = new CodeAndArguments(jar, new byte[0]).encodeToBytes();
         TransactionResult result = deploy(deployer, kernel, txData, BigInteger.ZERO);
         assertTrue(result.transactionStatus.isSuccess());
-        AionAddress dappAddress = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        AionAddress dappAddress = new AionAddress(result.copyOfTransactionOutput().get());
 
         AionAddress newAddress = capabilities.generateContractAddress(dappAddress, kernel.getNonce(dappAddress));
         kernel.putCode(newAddress, new byte[1]);

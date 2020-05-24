@@ -188,7 +188,7 @@ public class ContractLoggingTest {
         TransactionResult result = avm.run(ContractLoggingTest.kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, 0)[0].getResult();
 
         assertTrue(result.transactionStatus.isSuccess());
-        contract = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        contract = new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private TransactionResult runTransaction(Transaction tx) {

@@ -63,7 +63,7 @@ public class DefaultMethodIntegrationTest {
         Transaction create = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, txData, energyLimit, energyPrice);
         TransactionResult createResult = avm.run(kernel, new Transaction[] {create}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        AionAddress contractAddr = new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddr = new AionAddress(createResult.copyOfTransactionOutput().get());
 
         // Setup the call (parameters are currently ignored).
         byte[] argData = new byte[0];

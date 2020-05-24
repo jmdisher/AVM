@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.aion.avm.ClassNameExtractor;
 import org.aion.avm.core.types.CommonType;
@@ -25,21 +26,21 @@ public class CommonGenerators {
         .toArray(String[]::new);
 
     // We don't generate the shadows for these ones since we have hand-written them (but wrappers are still required).
-    public static final Set<String> kHandWrittenExceptionClassNames = Set.of(new String[] {
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_ERROR.dotName),
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_ASSERTION_ERROR.dotName),
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_EXCEPTION.dotName),
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_RUNTIME_EXCEPTION.dotName),
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_ENUM_CONSTANT_EXCEPTION.dotName),
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_NO_TYPE_PRESENT_EXCEPTION.dotName),
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_NO_SUCH_ELEMENT_EXCEPTION.dotName),
-    });
+    public static final Set<String> kHandWrittenExceptionClassNames = Arrays.stream(new String[] {
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_ERROR.dotName),
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_ASSERTION_ERROR.dotName),
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_EXCEPTION.dotName),
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_RUNTIME_EXCEPTION.dotName),
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_ENUM_CONSTANT_EXCEPTION.dotName),
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_NO_TYPE_PRESENT_EXCEPTION.dotName),
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_NO_SUCH_ELEMENT_EXCEPTION.dotName),
+        }).collect(Collectors.toSet());
 
     // We generate "legacy-style exception" shadows for these ones (and wrappers are still required).
-    public static final Set<String> kLegacyExceptionClassNames = Set.of(new String[] {
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_INITIALIZER_ERROR.dotName),
-        ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_CLASS_NOT_FOUND_EXCEPTION.dotName),
-    });
+    public static final Set<String> kLegacyExceptionClassNames = Arrays.stream(new String[] {
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_INITIALIZER_ERROR.dotName),
+            ClassNameExtractor.getOriginalClassName(CommonType.SHADOW_CLASS_NOT_FOUND_EXCEPTION.dotName),
+        }).collect(Collectors.toSet());
 
     // Record the parent class of each generated class. This information is needed by the heap size calculation.
     // Both class names are in the shadowed version.

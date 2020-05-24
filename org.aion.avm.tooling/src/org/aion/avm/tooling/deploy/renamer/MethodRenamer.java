@@ -13,7 +13,7 @@ public class MethodRenamer {
     private static boolean printEnabled = false;
     // this set contains the method names that should be changed, either because they are from the Object class or are the entry points
     // note that the descriptor for main is not checked and all main method names will be kept
-    private static Set<String> restrictions = Set.of(new String[]{"main", "hashcode", "equals", "<init>", "<clinit>", "toString"});
+    private static Set<String> restrictions = Arrays.asList(new String[]{"main", "hashcode", "equals", "<init>", "<clinit>", "toString"}).stream().collect(Collectors.toSet());
     private static Set<String> jclMethods;
 
     public static Map<String, String> renameMethods(Map<String, ClassNode> classMap, Map<String, ClassInfo> classInfoMap) {

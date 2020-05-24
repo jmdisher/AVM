@@ -22,7 +22,7 @@ public class StorageManipulationTest {
         assertTrue(result.transactionStatus.isSuccess());
 
         avmRule.kernel.generateBlock();
-        Address contract = new Address(result.copyOfTransactionOutput().orElseThrow());;
+        Address contract = new Address(result.copyOfTransactionOutput().get());;
         byte[] data = ABIUtil.encodeMethodArguments("manipulatePutStorageKey");
         result = avmRule.call(deployer, contract, BigInteger.ZERO, data, 2_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
@@ -35,7 +35,7 @@ public class StorageManipulationTest {
         assertTrue(result.transactionStatus.isSuccess());
 
         avmRule.kernel.generateBlock();
-        Address contract = new Address(result.copyOfTransactionOutput().orElseThrow());;
+        Address contract = new Address(result.copyOfTransactionOutput().get());;
         byte[] data = ABIUtil.encodeMethodArguments("manipulatePutStorageValue");
         result = avmRule.call(deployer, contract, BigInteger.ZERO, data, 2_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
@@ -48,7 +48,7 @@ public class StorageManipulationTest {
         assertTrue(result.transactionStatus.isSuccess());
 
         avmRule.kernel.generateBlock();
-        Address contract = new Address(result.copyOfTransactionOutput().orElseThrow());;
+        Address contract = new Address(result.copyOfTransactionOutput().get());;
         byte[] data = ABIUtil.encodeMethodArguments("manipulateGetStorageValue");
         result = avmRule.call(deployer, contract, BigInteger.ZERO, data, 2_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
@@ -61,7 +61,7 @@ public class StorageManipulationTest {
         assertTrue(result.transactionStatus.isSuccess());
 
         avmRule.kernel.generateBlock();
-        Address contract = new Address(result.copyOfTransactionOutput().orElseThrow());;
+        Address contract = new Address(result.copyOfTransactionOutput().get());;
         byte[] data = ABIUtil.encodeMethodArguments("manipulateStorageInReentrantCall");
         result = avmRule.call(deployer, contract, BigInteger.ZERO, data, 2_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());

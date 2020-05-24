@@ -18,12 +18,12 @@ import avm.Address;
 
 
 public class AionBufferTest {
-    private static final int RANGE_1BYTE = BigInteger.TWO.pow(8).intValue();
-    private static final int RANGE_2BYTES = BigInteger.TWO.pow(16).intValue();
-    private static final int INT_SLICE = BigInteger.TWO.pow(18).intValue();
-    private static final int LONG_SLICE = BigInteger.TWO.pow(16).intValue();
-    private static final int FLOAT_SLICE = BigInteger.TWO.pow(18).intValue();
-    private static final int DOUBLE_SLICE = BigInteger.TWO.pow(16).intValue();
+    private static final int RANGE_1BYTE = new BigInteger("2").pow(8).intValue();
+    private static final int RANGE_2BYTES = new BigInteger("2").pow(16).intValue();
+    private static final int INT_SLICE = new BigInteger("2").pow(18).intValue();
+    private static final int LONG_SLICE = new BigInteger("2").pow(16).intValue();
+    private static final int FLOAT_SLICE = new BigInteger("2").pow(18).intValue();
+    private static final int DOUBLE_SLICE = new BigInteger("2").pow(16).intValue();
     private static Random random;
 
     @Before

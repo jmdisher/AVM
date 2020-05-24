@@ -14,6 +14,7 @@ import org.aion.avm.utilities.JarBuilder;
 import org.aion.types.TransactionResult;
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigInteger;
@@ -25,6 +26,7 @@ import java.util.Collections;
  * Nothing explicitly is actually verified by these 'tests'.
  * The purpose is more to give us an idea about how our deployment costs look for different Dapps.
  */
+@Ignore
 public class DeploymentCostTest {
     @ClassRule
     public static AvmRule avmRule = new AvmRule(false);

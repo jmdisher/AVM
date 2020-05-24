@@ -9,5 +9,5 @@ public interface PrivateInterfaceMethod {
     default void anotherDefaultMethod() { init(2); }
 
     // This method is not part of the public API exposed by MyInterface
-    private int init(int a) { return a * 2; }
+    static int init(int a) { return a * 2; }
 }

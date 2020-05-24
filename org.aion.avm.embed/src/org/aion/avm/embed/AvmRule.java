@@ -259,14 +259,14 @@ public final class AvmRule implements TestRule {
                 System.out.println("Contract deployment failed with error " + result.transactionStatus.causeOfError);
                 return null;
             }
-            return new Address(result.copyOfTransactionOutput().orElseThrow());
+            return new Address(result.copyOfTransactionOutput().get());
         }
 
         /**
          * @return Decoded returned data of the call
          */
         public Object getDecodedReturnData() {
-            return ABIUtil.decodeOneObject(result.copyOfTransactionOutput().orElseThrow());
+            return ABIUtil.decodeOneObject(result.copyOfTransactionOutput().get());
         }
 
         /**

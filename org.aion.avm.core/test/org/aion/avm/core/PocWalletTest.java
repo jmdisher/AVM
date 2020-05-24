@@ -85,7 +85,7 @@ public class PocWalletTest {
         TransactionResult createResult = avm.run(externalState, new Transaction[] {createTransaction}, ExecutionType.ASSUME_MAINCHAIN, externalState.getBlockNumber()-1)[0].getResult();
 
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        Assert.assertNotNull(externalState.getTransformedCode(new AionAddress(createResult.copyOfTransactionOutput().orElseThrow())));
+        Assert.assertNotNull(externalState.getTransformedCode(new AionAddress(createResult.copyOfTransactionOutput().get())));
     }
 
     /**
@@ -106,7 +106,7 @@ public class PocWalletTest {
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
 
         // contract address is stored in return data
-        AionAddress contractAddress = new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddress = new AionAddress(createResult.copyOfTransactionOutput().get());
 
         byte[] initArgs = CallEncoder.init(new Address(extra1.toByteArray()), new Address(extra2.toByteArray()), requiredVotes, dailyLimit);
         Transaction initTransaction = AvmTransactionUtil.call(from, contractAddress, externalState.getNonce(from), BigInteger.ZERO, initArgs, energyLimit, energyPrice);
@@ -138,7 +138,7 @@ public class PocWalletTest {
         Transaction executeTransaction = AvmTransactionUtil.call(from, contractAddress, externalState.getNonce(from), BigInteger.ZERO, execArgs, energyLimit, energyPrice);
         TransactionResult executeResult = avm.run(externalState, new Transaction[] {executeTransaction}, ExecutionType.ASSUME_MAINCHAIN, externalState.getBlockNumber()-1)[0].getResult();
         Assert.assertTrue(executeResult.transactionStatus.isSuccess());
-        byte[] toConfirm = new ABIDecoder(executeResult.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray();
+        byte[] toConfirm = new ABIDecoder(executeResult.copyOfTransactionOutput().get()).decodeOneByteArray();
 
         // Now, confirm as one of the other owners to observe we can instantiate the Transaction instance, from storage.
         externalState.adjustBalance(extra1, BigInteger.valueOf(1_000_000_000_000L));
@@ -165,7 +165,7 @@ public class PocWalletTest {
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
 
         // contract address is stored in return data
-        byte[] contractAddress = createResult.copyOfTransactionOutput().orElseThrow();
+        byte[] contractAddress = createResult.copyOfTransactionOutput().get();
         return contractAddress;
     }
 }

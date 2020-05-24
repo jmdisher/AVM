@@ -56,13 +56,6 @@ public class ShadowEnergyLimitTest {
     }
 
     @Test
-    public void callBigIntegerSqrt() {
-        long time = run("callBigIntegerSqrt", 600);
-        if (printValues)
-            System.out.println("callBigIntegerSqrt time(ns) " + time);
-    }
-
-    @Test
     public void callBigIntegerToString() {
         long time = run("callBigIntegerToString", 1200);
         if (printValues)

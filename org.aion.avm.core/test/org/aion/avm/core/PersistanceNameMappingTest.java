@@ -80,7 +80,7 @@ public class PersistanceNameMappingTest {
         TransactionResult result = avm.run(externalState, new Transaction[]{ createTransaction }, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
 
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private void callContract(AvmImpl avm, IExternalState externalState, AionAddress contract, String method) {

@@ -69,13 +69,13 @@ public class ContractBalanceTest {
         assertEquals(BigInteger.ZERO, balance);
 
         // Increase the contract balance and check the amount.
-        BigInteger delta1 = BigInteger.TWO.pow(250);
+        BigInteger delta1 = new BigInteger("2").pow(250);
         kernel.adjustBalance(contract, delta1);
         balance = callContractToGetItsBalance(contract);
         assertEquals(delta1, balance);
 
         // Decrease the contract balance and check the amount.
-        BigInteger delta2 = BigInteger.TWO.pow(84).negate();
+        BigInteger delta2 = new BigInteger("2").pow(84).negate();
         kernel.adjustBalance(contract, delta2);
         balance = callContractToGetItsBalance(contract);
         assertEquals(delta1.add(delta2), balance);
@@ -105,7 +105,7 @@ public class ContractBalanceTest {
         Transaction transaction = AvmTransactionUtil.create(from, kernel.getNonce(from), value, jar, energyLimit, energyPrice);
         TransactionResult result = avm.run(ContractBalanceTest.kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private BigInteger callContractToGetItsBalance(AionAddress contract) {
@@ -116,7 +116,7 @@ public class ContractBalanceTest {
         Transaction transaction = AvmTransactionUtil.call(from, contract, kernel.getNonce(from), BigInteger.ZERO, callData, energyLimit, energyPrice);
         TransactionResult result = avm.run(ContractBalanceTest.kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new BigInteger(new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray());
+        return new BigInteger(new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneByteArray());
     }
 
     private BigInteger callContractToGetClinitBalance(AionAddress contract) {
@@ -127,7 +127,7 @@ public class ContractBalanceTest {
         Transaction transaction = AvmTransactionUtil.call(from, contract, kernel.getNonce(from), BigInteger.ZERO, callData, energyLimit, energyPrice);
         TransactionResult result = avm.run(ContractBalanceTest.kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new BigInteger(new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray());
+        return new BigInteger(new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneByteArray());
     }
 
     private AionAddress deployRedirectContract() {
@@ -138,7 +138,7 @@ public class ContractBalanceTest {
         Transaction transaction = AvmTransactionUtil.create(from, kernel.getNonce(from), BigInteger.ZERO, jar, energyLimit, energyPrice);
         TransactionResult result = avm.run(ContractBalanceTest.kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private BigInteger callContractToGetItsBalanceViaRedirectContract(AionAddress redirectContract, AionAddress balanceContract) {
@@ -160,7 +160,7 @@ public class ContractBalanceTest {
         Transaction transaction = AvmTransactionUtil.call(from, contract, kernel.getNonce(from), BigInteger.ZERO, callData, energyLimit, energyPrice);
         TransactionResult result = avm.run(ContractBalanceTest.kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new BigInteger(new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray());
+        return new BigInteger(new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneByteArray());
     }
 
     private Address getContractAsAbiAddress(AionAddress contract) {

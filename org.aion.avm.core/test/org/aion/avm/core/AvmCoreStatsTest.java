@@ -52,7 +52,7 @@ public class AvmCoreStatsTest {
         // Deploy the test contract.
         Transaction create = createCreateTransaction(kernel, txData);
         TransactionResult createResult = runSuccessfulBatch(kernel, avm, new Transaction[] {create})[0];
-        AionAddress contractAddress = new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddress = new AionAddress(createResult.copyOfTransactionOutput().get());
         Assert.assertEquals(1, stats.batchesConsumed);
         Assert.assertEquals(1, stats.transactionsConsumed);
         Assert.assertEquals(1, combineThreadTransactions(stats));
@@ -96,7 +96,7 @@ public class AvmCoreStatsTest {
         // Deploy the test contract.
         Transaction create = createCreateTransaction(kernel, txData);
         TransactionResult createResult = runSuccessfulBatch(kernel, avm, new Transaction[] {create})[0];
-        AionAddress contractAddress = new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddress = new AionAddress(createResult.copyOfTransactionOutput().get());
         Assert.assertEquals(1, stats.batchesConsumed);
         Assert.assertEquals(1, stats.transactionsConsumed);
         Assert.assertEquals(1, combineThreadTransactions(stats));

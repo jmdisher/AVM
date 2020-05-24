@@ -47,7 +47,7 @@ public class StrictFPVisitorTest {
         Transaction tx = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, new CodeAndArguments(jar, arguments).encodeToBytes(), energyLimit, energyPrice);
         TransactionResult txResult = avm.run(this.kernel, new Transaction[] {tx}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
 
-        dappAddress = new AionAddress(txResult.copyOfTransactionOutput().orElseThrow());
+        dappAddress = new AionAddress(txResult.copyOfTransactionOutput().get());
         assertTrue(null != dappAddress);
     }
 

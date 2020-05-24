@@ -35,16 +35,6 @@ public class ShadowEnergyLimitTarget {
     }
 
     @Callable
-    public static void callBigIntegerSqrt(int count) throws IllegalArgumentException{
-        byte[] arr1 = new byte[32];
-        Arrays.fill(arr1, 0, 32, Byte.MAX_VALUE);
-        BigInteger testValue = new BigInteger(arr1);
-        for (int i = 0; i < count; i++){
-            testValue.sqrt();
-        }
-    }
-
-    @Callable
     public static void callBigIntegerToString(int count) throws IllegalArgumentException{
         byte[] arr1 = new byte[32];
         Arrays.fill(arr1, 0, 32, Byte.MAX_VALUE);

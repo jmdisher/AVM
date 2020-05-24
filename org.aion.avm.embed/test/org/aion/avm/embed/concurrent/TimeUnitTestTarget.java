@@ -92,7 +92,7 @@ public class TimeUnitTestTarget {
 
     @Callable
     public static boolean testavm_values() {
-        TimeUnit[] values =  (TimeUnit[]) TimeUnit.values();
+        TimeUnit[] values =  TimeUnit.values();
         return TimeUnit.DAYS == values[0] &&
                 TimeUnit.HOURS == values[1] &&
                 TimeUnit.MINUTES == values[2] &&

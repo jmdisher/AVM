@@ -22,7 +22,7 @@ public class Caller {
         }
 
         Address address = genAddress(1);
-        BigInteger value = BigInteger.TWO;
+        BigInteger value = new BigInteger("2");
         byte[] data = "hello".getBytes();
         long energyLimit = 10000;
 

@@ -11,6 +11,7 @@ import org.junit.*;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.math.BigInteger;
 
@@ -69,7 +70,7 @@ public class CreateTest {
         ClassWriter classWriter = new ClassWriter(0);
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "a/Main", null, "java/lang/Object", null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "a/Main", null, "java/lang/Object", null);
 
         classWriter.visitSource("Main.java", null);
         {
@@ -93,7 +94,7 @@ public class CreateTest {
         ClassWriter classWriter = new ClassWriter(0);
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "b/Main", null, null, null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "b/Main", null, null, null);
 
         classWriter.visitSource("Main.java", null);
         {

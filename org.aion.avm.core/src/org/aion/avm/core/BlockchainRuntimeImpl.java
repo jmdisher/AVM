@@ -401,7 +401,7 @@ public class BlockchainRuntimeImpl implements IBlockchainRuntime {
         require(null != data, "data can't be NULL");
 
         Log log = Log.topicsAndData(this.transactionDestination.toByteArray(),
-                List.of(LogSizeUtils.truncatePadTopic(topic1.getUnderlying())),
+                Arrays.asList(LogSizeUtils.truncatePadTopic(topic1.getUnderlying())),
                 data.getUnderlying()
         );
         task.peekSideEffects().addLog(log);
@@ -414,7 +414,7 @@ public class BlockchainRuntimeImpl implements IBlockchainRuntime {
         require(null != data, "data can't be NULL");
 
         Log log = Log.topicsAndData(this.transactionDestination.toByteArray(),
-                List.of(LogSizeUtils.truncatePadTopic(topic1.getUnderlying()), LogSizeUtils.truncatePadTopic(topic2.getUnderlying())),
+                Arrays.asList(LogSizeUtils.truncatePadTopic(topic1.getUnderlying()), LogSizeUtils.truncatePadTopic(topic2.getUnderlying())),
                 data.getUnderlying()
         );
         task.peekSideEffects().addLog(log);
@@ -428,7 +428,7 @@ public class BlockchainRuntimeImpl implements IBlockchainRuntime {
         require(null != data, "data can't be NULL");
 
         Log log = Log.topicsAndData(this.transactionDestination.toByteArray(),
-                List.of(LogSizeUtils.truncatePadTopic(topic1.getUnderlying()), LogSizeUtils.truncatePadTopic(topic2.getUnderlying()), LogSizeUtils.truncatePadTopic(topic3.getUnderlying())),
+                Arrays.asList(LogSizeUtils.truncatePadTopic(topic1.getUnderlying()), LogSizeUtils.truncatePadTopic(topic2.getUnderlying()), LogSizeUtils.truncatePadTopic(topic3.getUnderlying())),
                 data.getUnderlying()
         );
         task.peekSideEffects().addLog(log);
@@ -443,7 +443,7 @@ public class BlockchainRuntimeImpl implements IBlockchainRuntime {
         require(null != data, "data can't be NULL");
 
         Log log = Log.topicsAndData(this.transactionDestination.toByteArray(),
-                List.of(LogSizeUtils.truncatePadTopic(topic1.getUnderlying()), LogSizeUtils.truncatePadTopic(topic2.getUnderlying()), LogSizeUtils.truncatePadTopic(topic3.getUnderlying()), LogSizeUtils.truncatePadTopic(topic4.getUnderlying())),
+                Arrays.asList(LogSizeUtils.truncatePadTopic(topic1.getUnderlying()), LogSizeUtils.truncatePadTopic(topic2.getUnderlying()), LogSizeUtils.truncatePadTopic(topic3.getUnderlying()), LogSizeUtils.truncatePadTopic(topic4.getUnderlying())),
                 data.getUnderlying()
         );
         task.peekSideEffects().addLog(log);

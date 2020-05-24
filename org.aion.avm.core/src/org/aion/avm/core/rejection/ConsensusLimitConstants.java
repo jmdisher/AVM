@@ -6,9 +6,9 @@ package org.aion.avm.core.rejection;
  */
 public class ConsensusLimitConstants {
     /*
-     * This will probably change, in the future, but we currently will only parse Java10 (version 54) classes.
+     * Only Java8 (version 52) supported in Laminar.
      */
-    public static final int SUPPORTED_CLASS_VERSION = 54;
+    public static final int SUPPORTED_CLASS_VERSION = 52;
     /*
      * This limit could probably be larger, since it really just needs to account for a type name length in 1 byte:
      * -probably 255 - 1 (for "L" prefix) - 3 (maximum array dimensions)

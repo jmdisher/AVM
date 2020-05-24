@@ -23,45 +23,9 @@ public class BigIntegerTarget {
     }
 
     @Callable
-    public static byte[] remainder(byte[] val) {
-        BigInteger testValue = new BigInteger(val);
-        BigInteger result = testValue.remainder(BigInteger.TWO);
-        return result.toByteArray();
-    }
-
-    @Callable
-    public static byte[] sqrt(byte[] val) {
-        BigInteger testValue = new BigInteger(val);
-        BigInteger result = testValue.sqrt();
-        return result.toByteArray();
-
-    }
-
-    @Callable
     public static byte[] negate(byte[] val) {
         BigInteger testValue = new BigInteger(val);
         BigInteger result = testValue.negate();
-        return result.toByteArray();
-    }
-
-    @Callable
-    public static byte[] mod(byte[] val) {
-        BigInteger testValue = new BigInteger(val);
-        BigInteger result = testValue.mod(BigInteger.TWO);
-        return result.toByteArray();
-    }
-
-    @Callable
-    public static byte[] modPow(byte[] val) {
-        BigInteger testValue = new BigInteger(val);
-        BigInteger result = testValue.modPow(testValue, BigInteger.TWO);
-        return result.toByteArray();
-    }
-
-    @Callable
-    public static byte[] modInverse(byte[] val) {
-        BigInteger testValue = new BigInteger(val);
-        BigInteger result = testValue.modInverse(BigInteger.TWO);
         return result.toByteArray();
     }
 
@@ -120,11 +84,6 @@ public class BigIntegerTarget {
     @Callable
     public static void bigDecimalToBigIntegerException(byte[] val) {
         BigDecimal.valueOf(Double.MAX_VALUE).toBigInteger();
-    }
-
-    @Callable
-    public static byte[] newBigInteger(int off, int len, byte[] val) {
-        return new BigInteger(-1, val, off, len).toByteArray();
     }
 
     @Callable

@@ -38,7 +38,7 @@ public class AionCollectionInterfaceTest {
     @Test
     public void testList() {
         TransactionResult deployRes = deploy();
-        Address contract = new Address(deployRes.copyOfTransactionOutput().orElseThrow());
+        Address contract = new Address(deployRes.copyOfTransactionOutput().get());
 
         byte[] args = ABIUtil.encodeMethodArguments("testList");
         TransactionResult testResult = call(contract, args);
@@ -48,7 +48,7 @@ public class AionCollectionInterfaceTest {
     @Test
     public void testSet() {
         TransactionResult deployRes = deploy();
-        Address contract = new Address(deployRes.copyOfTransactionOutput().orElseThrow());
+        Address contract = new Address(deployRes.copyOfTransactionOutput().get());
 
         byte[] args = ABIUtil.encodeMethodArguments("testSet");
         TransactionResult testResult = call(contract, args);
@@ -58,7 +58,7 @@ public class AionCollectionInterfaceTest {
     @Test
     public void testMap() {
         TransactionResult deployRes = deploy();
-        Address contract = new Address(deployRes.copyOfTransactionOutput().orElseThrow());
+        Address contract = new Address(deployRes.copyOfTransactionOutput().get());
 
         byte[] args = ABIUtil.encodeMethodArguments("testMap");
         TransactionResult testResult = call(contract, args);

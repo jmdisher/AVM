@@ -184,7 +184,7 @@ public class SelfDestructTest {
 
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        return new Address(result1.copyOfTransactionOutput().orElseThrow());
+        return new Address(result1.copyOfTransactionOutput().get());
     }
 
     private int callDAppInteger(Address dAppAddress, byte[] argData) {
@@ -205,7 +205,7 @@ public class SelfDestructTest {
     private byte[] callDAppSuccess(Address dAppAddress, byte[] argData) {
         TransactionResult result = avmRule.call(deployer, dAppAddress, BigInteger.ZERO, argData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        return result.copyOfTransactionOutput().orElseThrow();
+        return result.copyOfTransactionOutput().get();
     }
 
     private void failToCall(Address dAppAddress) {

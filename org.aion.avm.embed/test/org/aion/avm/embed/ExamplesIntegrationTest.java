@@ -39,7 +39,7 @@ public class ExamplesIntegrationTest {
         long energyPrice = 1l;
         TransactionResult createResult = avmRule.deploy(deployer, BigInteger.ZERO, txData, energyLimit, energyPrice).getTransactionResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        Address contractAddr = new Address(createResult.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(createResult.copyOfTransactionOutput().get());
         
         // We will just invoke a basic sequence of "PUT", "PUT", "GET" to make sure that we can call the main entry-points and execute the main paths.
         callStatic(contractAddr, "put", "key1", "value1");
@@ -58,7 +58,7 @@ public class ExamplesIntegrationTest {
         long energyPrice = 1l;
         TransactionResult createResult = avmRule.deploy(deployer, BigInteger.ZERO, txData, energyLimit, energyPrice).getTransactionResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        Address contractAddr = new Address(createResult.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(createResult.copyOfTransactionOutput().get());
         
         // We only want to check that we can call it without issue (it only produces STDOUT).
         callStatic(contractAddr, "sayHello");

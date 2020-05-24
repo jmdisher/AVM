@@ -582,7 +582,7 @@ public class AionMapTest {
     @Test
     public void resizeTest() throws Exception {
 
-        List<Integer> list = List.of(1, 2, 3, 9, 10);
+        List<Integer> list = Arrays.asList(1, 2, 3, 9, 10);
         //resize when inserting 6th element
         float loadFactor = 0.75f;
         int initialCapacity = 8;

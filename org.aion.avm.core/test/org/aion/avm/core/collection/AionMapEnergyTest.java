@@ -153,7 +153,7 @@ public class AionMapEnergyTest {
         if (printEnergyUsed) {
             System.out.println("deployment cost for " + mainClass.getName() + ": " + createResult.energyUsed);
         }
-        return new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(createResult.copyOfTransactionOutput().get());
     }
 
     private TransactionResult callStatic(AionAddress contract, String methodName, boolean validateReturnResult, int key) {
@@ -162,7 +162,7 @@ public class AionMapEnergyTest {
         TransactionResult callResult = avm.run(externalState, new Transaction[]{callTransaction}, ExecutionType.ASSUME_MAINCHAIN, externalState.getBlockNumber() - 1)[0].getResult();
         Assert.assertTrue(callResult.transactionStatus.isSuccess());
         if (validateReturnResult) {
-            Assert.assertEquals("STRING", new ABIDecoder(callResult.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+            Assert.assertEquals("STRING", new ABIDecoder(callResult.copyOfTransactionOutput().get()).decodeOneString());
         }
         return callResult;
     }

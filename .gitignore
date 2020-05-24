@@ -22,6 +22,7 @@ hs_err_pid*
 .classpath
 .project
 .settings/
+bin/
 
 # IntelliJ
 .idea/

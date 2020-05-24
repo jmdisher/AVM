@@ -57,7 +57,7 @@ public class ClassRenameVisitor extends ClassToolchain.ToolChainClassVisitor {
 
 
     private String mapDescriptor(String descriptor) {
-        StringBuilder builder = DescriptorParser.parse(descriptor, new DescriptorParser.Callbacks<>() {
+        StringBuilder builder = DescriptorParser.parse(descriptor, new DescriptorParser.Callbacks<StringBuilder>() {
             @Override
             public StringBuilder readObject(int arrayDimensions, String type, StringBuilder userData) {
                 writeArray(arrayDimensions, userData);

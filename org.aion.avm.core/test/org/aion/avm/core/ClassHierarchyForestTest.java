@@ -25,11 +25,11 @@ public class ClassHierarchyForestTest {
     @Test
     public void test() throws IOException {
         LoadedJar jar = LoadedJar.fromBytes(JarBuilder.buildJarForMainClassAndExplicitClassNamesAndBytecode(A.class, Collections.emptyMap(), AB.class, ABC.class, ABD.class, E.class, F.class, InterFace.class));
-        final var forest = ClassHierarchyForest.createForestFrom(jar);
+        final ClassHierarchyForest forest = ClassHierarchyForest.createForestFrom(jar);
         Collection<Forest.Node<String, ClassInfo>> roots = forest.getRoots();
         Assert.assertEquals(2, roots.size());
-        final var objectNode = forest.getNodeById("java.lang.Object");
-        final var bigDecimalNode = forest.getNodeById("java.math.BigDecimal");
+        final Forest.Node<String, ClassInfo> objectNode = forest.getNodeById("java.lang.Object");
+        final Forest.Node<String, ClassInfo> bigDecimalNode = forest.getNodeById("java.math.BigDecimal");
         Assert.assertTrue(roots.contains(objectNode));
         Assert.assertTrue(roots.contains(bigDecimalNode));
     }

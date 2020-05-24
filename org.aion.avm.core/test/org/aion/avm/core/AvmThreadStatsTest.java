@@ -50,7 +50,7 @@ public class AvmThreadStatsTest {
         FutureResult[] results = avm.run(kernel, ctx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         Transaction[] tx = new Transaction[results.length - 1];
@@ -120,7 +120,7 @@ public class AvmThreadStatsTest {
 
         results = avm.run(kernel, tx, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
         for (FutureResult f : results) {
-            Assert.assertEquals(2, new ABIDecoder(f.getResult().copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(2, new ABIDecoder(f.getResult().copyOfTransactionOutput().get()).decodeOneInteger());
         }
         
         totalAbortCount = 0;
@@ -172,7 +172,7 @@ public class AvmThreadStatsTest {
         FutureResult[] results = avm.run(kernel, ctx, ExecutionType.MINING, kernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         Transaction[] tx = new Transaction[results.length];
@@ -249,7 +249,7 @@ public class AvmThreadStatsTest {
         FutureResult[] results = avm.run(kernel, ctx, ExecutionType.MINING, kernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         // Clear the stats here since we aren't measuring the deployment.
@@ -347,7 +347,7 @@ public class AvmThreadStatsTest {
 
         kernel.generateBlock();
         FutureResult result = avm.run(kernel, new Transaction[] {create}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0];
-        AionAddress contractAddress = new AionAddress(result.getResult().copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddress = new AionAddress(result.getResult().copyOfTransactionOutput().get());
 
         // Clear the stats here since we aren't measuring the deployment.
         AvmCoreStats stats = avm.getStats();

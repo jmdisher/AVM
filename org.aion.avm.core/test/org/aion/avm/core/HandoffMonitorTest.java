@@ -178,7 +178,7 @@ public class HandoffMonitorTest {
         for (int i = 0; i < 128; i++){
             // Each thread converts its unique ID to a byte array stored in the result data, we grab that.
             TransactionResult transactionResult = results[i].getResult();
-            verifySet.add(bytesToThreadID(transactionResult.copyOfTransactionOutput().orElseThrow()));
+            verifySet.add(bytesToThreadID(transactionResult.copyOfTransactionOutput().get()));
         }
 
         Assert.assertEquals(threadCount, verifySet.size());
@@ -235,7 +235,7 @@ public class HandoffMonitorTest {
     }
 
     private static int bytesToThreadID(byte[] bytes) {
-        return ByteBuffer.allocate(4).put(bytes).flip().getInt();
+        return ((ByteBuffer)ByteBuffer.allocate(4).put(bytes).flip()).getInt();
     }
 
     private static Transaction newFakeTransaction() {

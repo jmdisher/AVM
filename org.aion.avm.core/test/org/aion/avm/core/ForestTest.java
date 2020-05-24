@@ -15,15 +15,15 @@ import static org.junit.Assert.*;
 public class ForestTest {
     @Test
     public void checkAddingTheFirstPair() {
-        final var forest = new Forest<String, byte[]>();
-        final var nameA = "A";
-        final var nameB = "B";
-        final var a = newNode(nameA);
-        final var b = newNode(nameB);
+        final Forest<String, byte[]> forest = new Forest<String, byte[]>();
+        final String nameA = "A";
+        final String nameB = "B";
+        final Forest.Node<String, byte[]> a = newNode(nameA);
+        final Forest.Node<String, byte[]> b = newNode(nameB);
         forest.add(a, b);
         assertEquals(1, forest.getRoots().size());
-        final var actualA = forest.getNodeById(nameA);
-        final var actualB = forest.getNodeById(nameB);
+        final Forest.Node<String, byte[]> actualA = forest.getNodeById(nameA);
+        final Forest.Node<String, byte[]> actualB = forest.getNodeById(nameB);
         assertEquals(a, actualA);
         assertNull(actualA.getParent());
         assertEquals(actualA, actualB.getParent());
@@ -35,19 +35,19 @@ public class ForestTest {
 
     @Test
     public void checkReparanting() {
-        final var forest = new Forest<String, byte[]>();
-        final var nameA0 = "A0";
-        final var nameA = "A";
-        final var nameB = "B";
-        final var a0 = newNode(nameA0);
-        final var a = newNode(nameA);
-        final var b = newNode(nameB);
+        final Forest<String, byte[]> forest = new Forest<String, byte[]>();
+        final String nameA0 = "A0";
+        final String nameA = "A";
+        final String nameB = "B";
+        final Forest.Node<String, byte[]> a0 = newNode(nameA0);
+        final Forest.Node<String, byte[]> a = newNode(nameA);
+        final Forest.Node<String, byte[]> b = newNode(nameB);
         forest.add(a, b);
         forest.add(a0, a);
         assertEquals(1, forest.getRoots().size());
-        final var actualA0 = forest.getNodeById(nameA0);
-        final var actualA = forest.getNodeById(nameA);
-        final var actualB = forest.getNodeById(nameB);
+        final Forest.Node<String, byte[]> actualA0 = forest.getNodeById(nameA0);
+        final Forest.Node<String, byte[]> actualA = forest.getNodeById(nameA);
+        final Forest.Node<String, byte[]> actualB = forest.getNodeById(nameB);
         assertEquals(forest.getRoots().iterator().next(), actualA0);
         assertEquals(a0, actualA0);
         assertEquals(a, actualA);
@@ -57,11 +57,11 @@ public class ForestTest {
 
     @Test
     public void checkReparanting2() {
-        final var forest = new Forest<String, byte[]>();
-        final var a = newNode("A");
-        final var ab = newNode("AB");
-        final var abc = newNode("ABC");
-        final var abcd = newNode("ABCD");
+        final Forest<String, byte[]> forest = new Forest<String, byte[]>();
+        final Forest.Node<String, byte[]> a = newNode("A");
+        final Forest.Node<String, byte[]> ab = newNode("AB");
+        final Forest.Node<String, byte[]> abc = newNode("ABC");
+        final Forest.Node<String, byte[]> abcd = newNode("ABCD");
         forest.add(a, ab);
         forest.add(abc, abcd);
         assertEquals(2, forest.getRoots().size());
@@ -71,21 +71,21 @@ public class ForestTest {
 
     @Test
     public void checkAddingDisjointTree() {
-        final var nameA = "A";
-        final var nameB = "B";
-        final var nameC = "C";
-        final var nameD = "D";
-        final var a = newNode(nameA);
-        final var b = newNode(nameB);
-        final var c = newNode(nameC);
-        final var d = newNode(nameD);
-        final var forest = new Forest<String, byte[]>();
+        final String nameA = "A";
+        final String nameB = "B";
+        final String nameC = "C";
+        final String nameD = "D";
+        final Forest.Node<String, byte[]> a = newNode(nameA);
+        final Forest.Node<String, byte[]> b = newNode(nameB);
+        final Forest.Node<String, byte[]> c = newNode(nameC);
+        final Forest.Node<String, byte[]> d = newNode(nameD);
+        final Forest<String, byte[]> forest = new Forest<String, byte[]>();
         forest.add(a, b);
         forest.add(c, d);
-        final var actualA = forest.getNodeById(nameA);
-        final var actualB = forest.getNodeById(nameB);
-        final var actualC = forest.getNodeById(nameC);
-        final var actualD = forest.getNodeById(nameD);
+        final Forest.Node<String, byte[]> actualA = forest.getNodeById(nameA);
+        final Forest.Node<String, byte[]> actualB = forest.getNodeById(nameB);
+        final Forest.Node<String, byte[]> actualC = forest.getNodeById(nameC);
+        final Forest.Node<String, byte[]> actualD = forest.getNodeById(nameD);
         assertEquals(actualB.getParent(), actualA);
         assertEquals(actualD.getParent(), actualC);
         assertEquals(2, forest.getRoots().size());
@@ -95,10 +95,10 @@ public class ForestTest {
 
     @Test
     public void checkAddingTwoChildren() {
-        final var a = newNode("A");
-        final var b = newNode("B");
-        final var c = newNode("C");
-        final var forest = new Forest<String, byte[]>();
+        final Forest.Node<String, byte[]> a = newNode("A");
+        final Forest.Node<String, byte[]> b = newNode("B");
+        final Forest.Node<String, byte[]> c = newNode("C");
+        final Forest<String, byte[]> forest = new Forest<String, byte[]>();
         forest.add(a, b);
         forest.add(a, c);
         assertEquals(1, forest.getRoots().size());
@@ -109,10 +109,10 @@ public class ForestTest {
 
     @Test
     public void checkWrongInput() {
-        final var nameA = "A";
-        final var a = newNode(nameA);
-        final var b = newNode(nameA);
-        final var forest = new Forest<String, byte[]>();
+        final String nameA = "A";
+        final Forest.Node<String, byte[]> a = newNode(nameA);
+        final Forest.Node<String, byte[]> b = newNode(nameA);
+        final Forest<String, byte[]> forest = new Forest<String, byte[]>();
         try {
             forest.add(a, b);
             Assert.fail();
@@ -123,18 +123,18 @@ public class ForestTest {
 
     @Test
     public void testVisitorVisitsAllNodes() {
-        final var a = newNode("A");
-        final var ab = newNode("AB");
-        final var abc = newNode("ABC");
-        final var abd = newNode("ABD");
-        final var e = newNode("E");
-        final var ef = newNode("EF");
-        final var forest = new Forest<String, byte[]>();
+        final Forest.Node<String, byte[]> a = newNode("A");
+        final Forest.Node<String, byte[]> ab = newNode("AB");
+        final Forest.Node<String, byte[]> abc = newNode("ABC");
+        final Forest.Node<String, byte[]> abd = newNode("ABD");
+        final Forest.Node<String, byte[]> e = newNode("E");
+        final Forest.Node<String, byte[]> ef = newNode("EF");
+        final Forest<String, byte[]> forest = new Forest<String, byte[]>();
         forest.add(a, ab);
         forest.add(ab, abc);
         forest.add(ab, abd);
         forest.add(e, ef);
-        final var visitor = new TestVisitor();
+        final TestVisitor visitor = new TestVisitor();
         forest.walkPreOrder(visitor);
         String[] expectedPaths = {"A" + "AB" + "ABC" + "ABD",
                 "E" + "EF"

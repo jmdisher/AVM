@@ -51,7 +51,7 @@ public class ResultTest {
         Transaction create = AvmTransactionUtil.create(DEPLOYER, KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, deployment, 5_000_000L, 1);
         TransactionResult result = AVM.run(KERNEL, new Transaction[] {create}, ExecutionType.ASSUME_MAINCHAIN, KERNEL.getBlockNumber()-1)[0].getResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        DAPP_ADDRESS = new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        DAPP_ADDRESS = new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     @AfterClass
@@ -123,7 +123,7 @@ public class ResultTest {
         // Make sure that this actually worked.
         Assert.assertTrue(result.transactionStatus.isSuccess());
         // A deploy always just returns the contract address.
-        Assert.assertEquals(BigInteger.ONE, KERNEL.getBalance(new AionAddress(result.copyOfTransactionOutput().orElseThrow())));
+        Assert.assertEquals(BigInteger.ONE, KERNEL.getBalance(new AionAddress(result.copyOfTransactionOutput().get())));
     }
 
     @Test

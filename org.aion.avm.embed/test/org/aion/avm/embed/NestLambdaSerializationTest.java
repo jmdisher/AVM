@@ -20,7 +20,7 @@ public class NestLambdaSerializationTest {
         byte[] jar = avmRule.getDappBytes(NestedLambdaTarget.class, new byte[0]);
         TransactionResult result = avmRule.deploy(deployer, BigInteger.ZERO, jar, 5_000_000, 1).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        Address contract = new Address(result.copyOfTransactionOutput().orElseThrow());
+        Address contract = new Address(result.copyOfTransactionOutput().get());
 
         // Create the nested lambda.
         avmRule.kernel.generateBlock();

@@ -45,7 +45,7 @@ public class BasicBlock {
 
     @Override
     public String toString() {
-        final var builder = new StringBuilder("BasicBlock{");
+        final StringBuilder builder = new StringBuilder("BasicBlock{");
         opcodeSequence.stream().map(i -> Printer.OPCODES[i]).forEach(s -> builder.append(s).append('\n'));
         builder.append('}');
         return builder.toString();

@@ -264,13 +264,13 @@ public class FailedInternalCallAddressesTest {
 
         TransactionResult result = avmRule.call(from, contract, BigInteger.ZERO, callData, energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneAddressArray();
+        return new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneAddressArray();
     }
 
     private static Address deployFailedInternalCallAddressTrackerContract() {
         TransactionResult result = avmRule.deploy(from, BigInteger.ZERO, avmRule.getDappBytes(FailedInternalCallAddressesContract.class, new byte[0]), energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new Address(result.copyOfTransactionOutput().orElseThrow());
+        return new Address(result.copyOfTransactionOutput().get());
     }
 
     private static Address[] deployInternalCallAddressTrackerContracts(int numContractsToDeploy) {
@@ -284,7 +284,7 @@ public class FailedInternalCallAddressesTest {
     private static Address deployInternalCallAddressTrackerContract() {
         TransactionResult result = avmRule.deploy(from, BigInteger.ZERO, avmRule.getDappBytes(FailedInternalCallAddressesContract.class, new byte[0]), energyLimit, energyPrice).getTransactionResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new Address(result.copyOfTransactionOutput().orElseThrow());
+        return new Address(result.copyOfTransactionOutput().get());
     }
 
     /**

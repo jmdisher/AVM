@@ -49,7 +49,7 @@ public class ShadowRuntimeFailureTest {
         byte[] txData = getDappBytesWithUserlib(ShadowRuntimeFailureTarget.class, new byte[0]);
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // 0-7 are failures and 8 is a success.
         for (int i = 0; i < 8; ++i) {
@@ -60,7 +60,7 @@ public class ShadowRuntimeFailureTest {
         byte[] data = new byte[] {(byte)8};
         TransactionResult result  = avmRule.call(deployer, contractAddr, BigInteger.ZERO, data, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(true, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneBoolean());
         
     }
 

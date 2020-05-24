@@ -54,7 +54,7 @@ public class TransformedCodeCacheTest {
         // this transaction will force a re-transformation operation to be done
         TransactionResult result = callDappNoArgument(kernel, deployer, dappAddress, "doubleStaticValue", ExecutionType.ASSUME_MAINCHAIN, 500_000);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // transformed code should be written to the database
         Assert.assertNotNull(kernel.getTransformedCode(dappAddress));
@@ -100,7 +100,7 @@ public class TransformedCodeCacheTest {
         result = callDappNoArgument(kernel, deployer, dappAddress, "doubleStaticValue", ExecutionType.ASSUME_MAINCHAIN, 2_000_000);
 
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // since the transaction is successful, the transformed code should not be written back to the cache
         kernel.putCode(dappAddress, new byte[0]);
@@ -212,7 +212,7 @@ public class TransformedCodeCacheTest {
 
         // this transaction will force a re-transformation operation to be done
         TransactionResult result = callDappNoArgument(kernel, deployer, dappAddress, "doubleStaticValue", ExecutionType.ETH_CALL, 500_000);
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
@@ -246,7 +246,7 @@ public class TransformedCodeCacheTest {
 
         // this transaction will read from the cache and write back
         result = callDappNoArgument(kernel, deployer, dappAddress, "doubleStaticValue", ExecutionType.ETH_CALL, 500_000);
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
@@ -256,7 +256,7 @@ public class TransformedCodeCacheTest {
 
         result = callDappNoArgument(kernel, deployer, dappAddress, "doubleStaticValue", ExecutionType.ASSUME_MAINCHAIN, 500_000);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     @Test
@@ -284,14 +284,14 @@ public class TransformedCodeCacheTest {
         // this transaction must read from the cache, thus should succeed
         result = callDappNoArgument(kernel, deployer, dappAddress, "doubleStaticValue", ExecutionType.MINING, 500_000);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.setTransformedCode(dappAddress, null);
 
         // this transaction must read from the cache, thus should succeed
         result = callDappNoArgument(kernel, deployer, dappAddress, "doubleStaticValue", ExecutionType.ASSUME_SIDECHAIN, 500_000);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     @Test
@@ -325,7 +325,7 @@ public class TransformedCodeCacheTest {
         Transaction tx1 = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, txData, 5_000_000, 1);
         TransactionResult result = avm.run(kernel, new Transaction[]{tx1}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private static TransactionResult callDappNoArgument(TestingState kernel, AionAddress sender, AionAddress dappAddress, String methodName, ExecutionType executionType, long energyLimit) {

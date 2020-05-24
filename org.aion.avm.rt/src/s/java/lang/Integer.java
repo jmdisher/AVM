@@ -65,12 +65,6 @@ public final class Integer extends Number implements Comparable<Integer> {
         return java.lang.Integer.parseInt(s.getUnderlying());
     }
 
-    public static int avm_parseInt(CharSequence s, int beginIndex, int endIndex, int radix)
-            throws NumberFormatException {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Integer_avm_parseInt_2);
-        return java.lang.Integer.parseInt(s.avm_toString().getUnderlying(), beginIndex, endIndex, radix);
-    }
-
     public static int avm_parseUnsignedInt(String s, int radix) throws NumberFormatException {
         IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Integer_avm_parseUnsignedInt);
         return java.lang.Integer.parseUnsignedInt(s.getUnderlying(), radix);
@@ -79,12 +73,6 @@ public final class Integer extends Number implements Comparable<Integer> {
     public static int avm_parseUnsignedInt(String s) throws NumberFormatException {
         IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Integer_avm_parseUnsignedInt_1);
         return java.lang.Integer.parseUnsignedInt(s.getUnderlying());
-    }
-
-    public static int avm_parseUnsignedInt(CharSequence s, int beginIndex, int endIndex, int radix)
-            throws NumberFormatException {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.Integer_avm_parseUnsignedInt_2);
-        return java.lang.Integer.parseUnsignedInt(s.avm_toString().getUnderlying(), beginIndex, endIndex, radix);
     }
 
     public static Integer avm_valueOf(String s, int radix) throws NumberFormatException {

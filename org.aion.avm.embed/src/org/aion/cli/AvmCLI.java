@@ -53,7 +53,7 @@ public class AvmCLI {
 
     public static void reportDeployResult(IEnvironment env, FutureResult future){
         TransactionResult createResult = future.getResult();
-        String dappAddress = Helpers.bytesToHexString(createResult.copyOfTransactionOutput().orElseThrow());
+        String dappAddress = Helpers.bytesToHexString(createResult.copyOfTransactionOutput().get());
         env.noteRelevantAddress(dappAddress);
 
         // In the case of SUCCESS, the causeOfError is the empty string. But we want to explicitly display SUCCESS.
@@ -110,7 +110,7 @@ public class AvmCLI {
         lineSeparator(env);
         env.logLine("DApp call result");
         env.logLine("Result status: " + callResult.transactionStatus);
-        env.logLine("Return value : " + Helpers.bytesToHexString(callResult.copyOfTransactionOutput().orElseThrow()));
+        env.logLine("Return value : " + Helpers.bytesToHexString(callResult.copyOfTransactionOutput().get()));
         env.logLine("Energy cost  : " + callResult.energyUsed);
 
         if (AvmInternalError.FAILED_EXCEPTION.error.equals(callResult.transactionStatus.causeOfError)) {
@@ -136,7 +136,7 @@ public class AvmCLI {
         if (!transferResult.copyOfTransactionOutput().isPresent()){
             env.logLine("Return value : " + "void");
         } else {
-            env.logLine("Return value : " + Helpers.bytesToHexString(transferResult.copyOfTransactionOutput().orElseThrow()));
+            env.logLine("Return value : " + Helpers.bytesToHexString(transferResult.copyOfTransactionOutput().get()));
         }
         env.logLine("Energy cost  : " + transferResult.energyUsed);
 

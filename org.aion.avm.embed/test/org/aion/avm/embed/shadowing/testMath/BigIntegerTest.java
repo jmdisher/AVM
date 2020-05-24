@@ -7,6 +7,7 @@ import org.aion.avm.tooling.ABIUtil;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -60,39 +61,9 @@ public class BigIntegerTest {
     }
 
     @Test
-    public void remainder() {
-        Assert.assertArrayEquals(testValue32Bytes.remainder(BigInteger.TWO).toByteArray(),
-                (byte[]) callStatic("remainder", testValue32Bytes.toByteArray()).getDecodedReturnData());
-    }
-
-    @Test
-    public void sqrt() {
-        Assert.assertArrayEquals(testValue32Bytes.sqrt().toByteArray(),
-                (byte[]) callStatic("sqrt", testValue32Bytes.toByteArray()).getDecodedReturnData());
-    }
-
-    @Test
     public void negate() {
         Assert.assertArrayEquals(testValue32Bytes.negate().toByteArray(),
                 (byte[]) callStatic("negate", testValue32Bytes.toByteArray()).getDecodedReturnData());
-    }
-
-    @Test
-    public void mod() {
-        Assert.assertArrayEquals(testValue32Bytes.mod(BigInteger.TWO).toByteArray(),
-                (byte[]) callStatic("mod", testValue32Bytes.toByteArray()).getDecodedReturnData());
-    }
-
-    @Test
-    public void modPow() {
-        Assert.assertArrayEquals(testValue16Bytes.modPow(testValue16Bytes, BigInteger.TWO).toByteArray(),
-                (byte[]) callStatic("modPow", testValue16Bytes.toByteArray()).getDecodedReturnData());
-    }
-
-    @Test
-    public void modInverse() {
-        Assert.assertArrayEquals(testValue32Bytes.modInverse(BigInteger.TWO).toByteArray(),
-                (byte[]) callStatic("modInverse", testValue32Bytes.toByteArray()).getDecodedReturnData());
     }
 
     @Test
@@ -111,12 +82,6 @@ public class BigIntegerTest {
     public void bitCount() {
         Assert.assertEquals(testValue32Bytes.bitCount(),
                 (int) callStatic("bitCount", testValue32Bytes.toByteArray()).getDecodedReturnData());
-    }
-
-    @Test
-    public void newBigInteger() {
-        Assert.assertArrayEquals(testValue32Bytes.negate().toByteArray(),
-                (byte[]) callStatic("newBigInteger", 0, 32, testValue32Bytes.toByteArray()).getDecodedReturnData());
     }
 
     @Test

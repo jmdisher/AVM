@@ -39,7 +39,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "JavaLang");
@@ -58,7 +58,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "JavaLang");
@@ -79,7 +79,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "JavaMath");
@@ -98,7 +98,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "JavaMath");
@@ -119,7 +119,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "Api");
@@ -138,7 +138,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "Api");
@@ -159,7 +159,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "JavaLang");
@@ -183,7 +183,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "JavaMath");
@@ -207,7 +207,7 @@ public class ShadowSerializationTest {
         // deploy
         TransactionResult result1 = avmRule.deploy(deployer, BigInteger.ZERO, txData, DEPLOY_ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result1.transactionStatus.isSuccess());
-        Address contractAddr = new Address(result1.copyOfTransactionOutput().orElseThrow());
+        Address contractAddr = new Address(result1.copyOfTransactionOutput().get());
         
         // Populate initial data.
         int firstHash = populate(contractAddr, "Api");
@@ -230,7 +230,7 @@ public class ShadowSerializationTest {
         byte[] argData = ABIUtil.encodeMethodArguments("populate_" + segmentName);
         TransactionResult result  = avmRule.call(deployer, contractAddr, BigInteger.ZERO,  argData, energyLimit, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        return new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger();
+        return new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger();
     }
 
     private int getHash(Address contractAddr, String segmentName) {
@@ -238,14 +238,14 @@ public class ShadowSerializationTest {
         byte[] argData = ABIUtil.encodeMethodArguments("getHash_" + segmentName);
         TransactionResult result  = avmRule.call(deployer, contractAddr, BigInteger.ZERO,  argData, energyLimit, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        return new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger();
+        return new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger();
     }
 
     private int getHashSuccessWithLimit(Address contractAddr, String segmentName, long energyLimit) {
         byte[] argData = ABIUtil.encodeMethodArguments("getHash_" + segmentName);
         TransactionResult result  = avmRule.call(deployer, contractAddr, BigInteger.ZERO,  argData, energyLimit, ENERGY_PRICE).getTransactionResult();
         return (result.transactionStatus.isSuccess())
-                ? new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger()
+                ? new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger()
                 : 0;
     }
 
@@ -254,7 +254,7 @@ public class ShadowSerializationTest {
         byte[] argData = ABIUtil.encodeMethodArguments("verifyReentrantChange_" + segmentName);
         TransactionResult result  = avmRule.call(deployer, contractAddr, BigInteger.ZERO,  argData, energyLimit, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertTrue(new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertTrue(new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneBoolean());
     }
 
     private byte[] getDappBytesWithUserlib(Class<?> mainClass, byte[] arguments, Class<?>... otherClasses) {

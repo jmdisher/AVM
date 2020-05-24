@@ -31,7 +31,7 @@ public class InstanceOfIntegrationTest {
     public static void setupClass() throws Exception {
         TransactionResult createResult = avmRule.deploy(deployer, BigInteger.ZERO, avmRule.getDappBytes(InstanceOfIntegrationTestTarget.class, new byte[0]), ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        dappAddress = new Address(createResult.copyOfTransactionOutput().orElseThrow());
+        dappAddress = new Address(createResult.copyOfTransactionOutput().get());
     }
 
     @Test
@@ -148,6 +148,6 @@ public class InstanceOfIntegrationTest {
         byte[] argData = ABIUtil.encodeMethodArguments(methodName);
         TransactionResult result = avmRule.call(deployer, dappAddress, BigInteger.ZERO, argData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        return new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean();
+        return new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneBoolean();
     }
 }

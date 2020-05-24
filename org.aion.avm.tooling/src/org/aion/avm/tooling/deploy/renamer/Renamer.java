@@ -27,7 +27,7 @@ public class Renamer {
         }
 
         try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
-            byte[] renamedJarBytes = rename(fileInputStream.readAllBytes());
+            byte[] renamedJarBytes = rename(Utilities.stream_readAllBytes(fileInputStream));
             int pathLength = args[0].lastIndexOf("/") + 1;
             String outputJarName = args[0].substring(0, pathLength) + "renamed_" + args[0].substring(pathLength);
             writeOptimizedJar(outputJarName, renamedJarBytes);

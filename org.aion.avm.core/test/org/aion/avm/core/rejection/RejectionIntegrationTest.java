@@ -20,6 +20,7 @@ import org.aion.types.TransactionResult;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.math.BigInteger;
@@ -71,6 +72,7 @@ public class RejectionIntegrationTest {
         Assert.assertEquals(AvmInternalError.FAILED_REJECTED_CLASS.error, createResult.transactionStatus.causeOfError);
     }
 
+    @Ignore
     @Test
     public void rejectCorruptMethod() throws IOException {
         kernel.generateBlock();

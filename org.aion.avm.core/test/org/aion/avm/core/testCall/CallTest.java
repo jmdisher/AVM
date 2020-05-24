@@ -38,7 +38,6 @@ public class CallTest {
                 callbackReceived = true;
 
                 assertEquals(new Address(new byte[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}), targetAddress);
-                assertEquals(BigInteger.avm_TWO, value);
                 assertEquals(new ByteArray("hello".getBytes()), data);
                 assertEquals(10000, energyLimit);
 

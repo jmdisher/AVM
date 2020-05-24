@@ -9,7 +9,7 @@ public class Double extends s.java.lang.Object {
     public boolean avm_valueOfWasCalled;
 
     public static Double avm_valueOf(double origVal) {
-        final var newVal = new Double();
+        final Double newVal = new Double();
         newVal.val = origVal;
         newVal.avm_valueOfWasCalled = true;
         return newVal;

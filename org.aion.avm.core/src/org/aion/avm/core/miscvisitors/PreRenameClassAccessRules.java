@@ -1,5 +1,6 @@
 package org.aion.avm.core.miscvisitors;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -74,13 +75,13 @@ public class PreRenameClassAccessRules {
     }
 
     // This is the hard-coded list of classes, from the JCL, which we allow the user code to subclass.
-    private static final Set<String> SUBCLASS_WHITELIST_SLASH_NAMES = Set.of(
+    private static final Set<String> SUBCLASS_WHITELIST_SLASH_NAMES = Arrays.stream(new String[] {
             Enum.class.getName()
             , Exception.class.getName()
             , Object.class.getName()
             , RuntimeException.class.getName()
             , Throwable.class.getName()
-    ).stream().map((dotStyle) -> Utilities.fulllyQualifiedNameToInternalName(dotStyle)).collect(Collectors.toSet());
+    }).map((dotStyle) -> Utilities.fulllyQualifiedNameToInternalName(dotStyle)).collect(Collectors.toSet());
 
     private final Set<String> userDefinedSlashClassesOnly;
     private final Set<String> userDefinedSlashClassesAndInterfaces;

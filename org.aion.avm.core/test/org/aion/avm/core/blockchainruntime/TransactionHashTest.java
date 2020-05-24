@@ -136,7 +136,7 @@ public class TransactionHashTest {
         kernel.generateBlock();
         TransactionResult result = avm.run(kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return result.copyOfTransactionOutput().orElseThrow();
+        return result.copyOfTransactionOutput().get();
     }
 
     private static void callContractAndVerifySuccess(Transaction transaction) {
@@ -158,6 +158,6 @@ public class TransactionHashTest {
         kernel.generateBlock();
         TransactionResult result = avm.run(kernel, new Transaction[] {transaction}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 }

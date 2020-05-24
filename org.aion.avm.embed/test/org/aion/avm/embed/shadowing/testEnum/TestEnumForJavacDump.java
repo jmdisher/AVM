@@ -15,7 +15,7 @@ public class TestEnumForJavacDump implements Opcodes {
         FieldVisitor fieldVisitor;
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_FINAL | ACC_SUPER | ACC_ENUM, PACKAGE_NAME_INTERNAL + "/TestEnumForValues", "Ljava/lang/Enum<L" + PACKAGE_NAME_INTERNAL + "/TestEnumForValues;>;", "java/lang/Enum", null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_FINAL | ACC_SUPER | ACC_ENUM, PACKAGE_NAME_INTERNAL + "/TestEnumForValues", "Ljava/lang/Enum<L" + PACKAGE_NAME_INTERNAL + "/TestEnumForValues;>;", "java/lang/Enum", null);
 
         {
             fieldVisitor = classWriter.visitField(ACC_PUBLIC | ACC_FINAL | ACC_STATIC | ACC_ENUM, "TEST", "L" + PACKAGE_NAME_INTERNAL + "/TestEnumForValues;", null, null);

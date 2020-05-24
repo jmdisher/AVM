@@ -65,7 +65,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // generate sidechain block with parent on mainchain
         sidechainKernel.generateBlock();
@@ -89,7 +89,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -114,7 +114,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         sidechainKernel.generateBlock();
         mainchainKernel.generateBlock();
@@ -130,7 +130,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_SIDECHAIN, commonParent);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
 
@@ -138,7 +138,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -164,7 +164,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         sidechainKernel.generateBlock();
         mainchainKernel.generateBlock();
@@ -176,7 +176,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         sidechainKernel.generateBlock();
 
@@ -187,7 +187,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_SIDECHAIN, commonParent);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // reset the transformed code on the kernel
         mainchainKernel.setTransformedCode(dappAddress, new byte[0]);
@@ -197,7 +197,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -226,7 +226,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_SIDECHAIN, commonParent);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
 
@@ -234,7 +234,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -256,7 +256,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         sidechainKernel.generateBlock();
@@ -266,7 +266,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         sidechainKernel.generateBlock();
@@ -274,11 +274,11 @@ public class ExecutionTypeCacheTest {
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_DEEP_SIDECHAIN, 0);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
-        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         sidechainKernel.generateBlock();
@@ -286,11 +286,11 @@ public class ExecutionTypeCacheTest {
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_DEEP_SIDECHAIN, 0);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
-        Assert.assertEquals(80, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(80, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -311,14 +311,14 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.MINING, miningKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
 
         // add to cache
         result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, miningKernel.getBlockNumber() - 1);
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
         // make sure it's read from the cache
@@ -327,7 +327,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.MINING, miningKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
         // make sure it was written back to cache
@@ -335,7 +335,7 @@ public class ExecutionTypeCacheTest {
 
         result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, miningKernel.getBlockNumber() - 1);
-        Assert.assertEquals(80, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(80, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -358,14 +358,14 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.MINING, miningKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
 
         // add to cache
         result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, miningKernel.getBlockNumber() - 1);
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
         // make sure it's read from the cache
@@ -376,7 +376,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.MINING, miningKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
         // make sure it was wriiten back to cache
@@ -386,7 +386,7 @@ public class ExecutionTypeCacheTest {
 
         result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, miningKernel.getBlockNumber() - 1);
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
         // make sure it was wriiten back to cache
@@ -396,7 +396,7 @@ public class ExecutionTypeCacheTest {
 
         result = callDapp(miningKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, miningKernel.getBlockNumber() - 1);
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -422,7 +422,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(miningKernel, sender, dappAddress, "doubleStaticValue",
                 ExecutionType.MINING, miningKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         miningKernel.generateBlock();
 
@@ -434,7 +434,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(miningKernel, sender, dappAddress, "doubleStaticValue",
                 ExecutionType.MINING, miningKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -455,13 +455,13 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         //add to cache for sidechain kernel
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, sidechainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         long commonParent = mainchainKernel.getBlockNumber();
         //fork
@@ -472,7 +472,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         sidechainKernel.generateBlock();
@@ -480,12 +480,12 @@ public class ExecutionTypeCacheTest {
         //update cache for mainchain kernel
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
-        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         //update db for sidechain kernel
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_DEEP_SIDECHAIN, 0);
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         sidechainKernel.generateBlock();
         //ensure cache is used
@@ -494,7 +494,7 @@ public class ExecutionTypeCacheTest {
         //mark the sidechain as the new mainchain
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.SWITCHING_MAINCHAIN, commonParent);
-        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -515,13 +515,13 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         //add to cache for sidechain kernel
         result = callDapp(sidechainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, sidechainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         long commonParent = mainchainKernel.getBlockNumber();
         //fork
@@ -532,7 +532,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         sidechainKernel.generateBlock();
@@ -540,7 +540,7 @@ public class ExecutionTypeCacheTest {
         //update cache for mainchain kernel
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
-        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         //update db for sidechain kernel
         result = callDapp(sidechainKernel, deployer, dappAddress, "selfDestruct",
@@ -614,7 +614,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -639,7 +639,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // generate sidechain block with parent on mainchain
         mainchainKernel.generateBlock();
@@ -663,7 +663,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -685,7 +685,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         long commonParent = mainchainKernel.getBlockNumber();
@@ -702,7 +702,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ETH_CALL, commonParent);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         mainchainKernel.setTransformedCode(dappAddress, new byte[0]);
@@ -713,7 +713,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -736,7 +736,7 @@ public class ExecutionTypeCacheTest {
         TransactionResult result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         long commonParent = mainchainKernel.getBlockNumber();
@@ -748,14 +748,14 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
 
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         mainchainKernel.generateBlock();
         byte[] graphMainChainLatest = mainchainKernel.getObjectGraph(dappAddress);
@@ -769,7 +769,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ETH_CALL, commonParent);
 
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // reset the transformed code on the kernel
         mainchainKernel.setTransformedCode(dappAddress, new byte[0]);
@@ -781,7 +781,7 @@ public class ExecutionTypeCacheTest {
         result = callDapp(mainchainKernel, deployer, dappAddress, "doubleStaticValue",
                 ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
 
-        Assert.assertEquals(80, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(80, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -808,13 +808,13 @@ public class ExecutionTypeCacheTest {
         FutureResult[] results = avm.run(mainchainKernel, ctx, ExecutionType.ASSUME_MAINCHAIN, mainchainKernel.getBlockNumber() - 1);
         AionAddress[] contractAddresses = new AionAddress[results.length];
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         results = avm.run(sidechainKernel, ctx, ExecutionType.ASSUME_MAINCHAIN, sidechainKernel.getBlockNumber() - 1);
 
         for (int i = 0; i < results.length; i++) {
-            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().orElseThrow());
+            contractAddresses[i] = new AionAddress(results[i].getResult().copyOfTransactionOutput().get());
         }
 
         long commonParent = mainchainKernel.getBlockNumber();
@@ -847,7 +847,7 @@ public class ExecutionTypeCacheTest {
 
         results = avm.run(sidechainKernel, tx, ExecutionType.ASSUME_SIDECHAIN, commonParent);
         for (FutureResult f : results) {
-            Assert.assertEquals(0, new ABIDecoder(f.getResult().copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(0, new ABIDecoder(f.getResult().copyOfTransactionOutput().get()).decodeOneInteger());
         }
     }
 
@@ -856,7 +856,7 @@ public class ExecutionTypeCacheTest {
         Transaction tx1 = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, txData, 5_000_000, 1);
         TransactionResult result = avm.run(kernel, new Transaction[]{tx1}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private static TransactionResult callDapp(TestingState kernel, AionAddress sender, AionAddress dappAddress,

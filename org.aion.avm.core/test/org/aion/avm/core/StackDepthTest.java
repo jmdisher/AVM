@@ -37,7 +37,7 @@ public class StackDepthTest {
         Transaction tx = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, jar, 5_000_000, 1);
         TransactionResult txResult = avm.run(kernel, new Transaction[] {tx}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         assertTrue(txResult.transactionStatus.isSuccess());
-        dappAddress = new AionAddress(txResult.copyOfTransactionOutput().orElseThrow());
+        dappAddress = new AionAddress(txResult.copyOfTransactionOutput().get());
     }
 
     @AfterClass

@@ -359,7 +359,7 @@ public class AionSubListTest {
     @Test
     public void testClear(){
         int size = defaultSubList.size();
-        List copyOfSublist = List.copyOf(defaultSubList);
+        List copyOfSublist = Collections.unmodifiableList(defaultSubList);
         defaultSubList.clear();
         Assert.assertEquals(0, defaultSubList.size());
         Assert.assertEquals(defaultListSize - size, defaultAionList.size());
@@ -436,7 +436,7 @@ public class AionSubListTest {
         }
         Assert.assertTrue(thrown);
         int sublistSize = defaultSubList.size();
-        List copyOfSublist = List.copyOf(defaultSubList);
+        List copyOfSublist = new ArrayList<>(defaultSubList);
 
         for (int i = 0; i < sublistSize; i++) {
             defaultSubList.remove(0);

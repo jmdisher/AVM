@@ -30,13 +30,13 @@ public final class ClassHierarchyForest extends Forest<String, ClassInfo> {
     private final LoadedJar loadedJar;
 
     public Map<String, ClassInfo> toFlatMapWithoutRoots() {
-        final var collector = new FlatMapCollector(getNodesCount());
+        final FlatMapCollector collector = new FlatMapCollector(getNodesCount());
         walkPreOrder(collector);
         return collector.getMap();
     }
 
     public static ClassHierarchyForest createForestFrom(LoadedJar loadedJar) throws IOException {
-        final var forest = new ClassHierarchyForest(loadedJar);
+        final ClassHierarchyForest forest = new ClassHierarchyForest(loadedJar);
         forest.createForestInternal();
         return forest;
     }
@@ -55,13 +55,13 @@ public final class ClassHierarchyForest extends Forest<String, ClassInfo> {
                 byte[] parentBytes = classNameToBytes.get(parentName);
                 ClassInfo parentInfo = (parentBytes != null) ? analyzeClass(parentBytes).value : new ClassInfo(false, null);
 
-                final var parentNode = new Node<>(parentName, parentInfo);
-                final var childNode = new Node<>(entry.getKey(), pair.value);
+                final Node<String, ClassInfo> parentNode = new Node<>(parentName, parentInfo);
+                final Node<String, ClassInfo> childNode = new Node<>(entry.getKey(), pair.value);
                 add(parentNode, childNode);
             }else{
                 // Interface will be added into forest as child of Object
-                final var parentNode = new Node<>(Object.class.getName(), new ClassInfo(false, null));
-                final var childNode = new Node<>(entry.getKey(), pair.value);
+                final Node<String, ClassInfo> parentNode = new Node<>(Object.class.getName(), new ClassInfo(false, null));
+                final Node<String, ClassInfo> childNode = new Node<>(entry.getKey(), pair.value);
                 add(parentNode, childNode);
             }
         }
@@ -75,7 +75,7 @@ public final class ClassHierarchyForest extends Forest<String, ClassInfo> {
      */
     private Pair<String, ClassInfo> analyzeClass(byte[] klass) {
         ClassReader reader = new ClassReader(klass);
-        final var codeVisitor = new CodeVisitor();
+        final CodeVisitor codeVisitor = new CodeVisitor();
         reader.accept(codeVisitor, ClassReader.SKIP_FRAMES);
         String parent = codeVisitor.getParentQualifiedName();
         boolean isInterface = codeVisitor.isInterface();

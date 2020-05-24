@@ -65,7 +65,7 @@ public class ConstantClassBuilder {
         Map<String, String> constantToFieldMap = new HashMap<>();
         ClassWriter out = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         
-        int classVersion = 54;
+        int classVersion = 52;
         // (note that this class doesn't deal with floats, but we add the STRICT option so some general tests are happy).
         int classAccess = Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER | Opcodes.ACC_STRICT;
         // We ignore generics, so null signature.

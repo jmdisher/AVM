@@ -56,7 +56,7 @@ public class HotObjectTest {
 
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.adjustBalance(kernel.getMinerAddress(), BigInteger.TEN.pow(10));
         kernel.generateBlock();
@@ -69,8 +69,8 @@ public class HotObjectTest {
         Transaction tx3 = AvmTransactionUtil.call(kernel.getMinerAddress(), dappAddress, kernel.getNonce(kernel.getMinerAddress()), BigInteger.ZERO, data, energyLimit, energyPrice);
 
         FutureResult[] result2 = avm.run(kernel, new Transaction[]{tx2, tx3}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1);
-        Assert.assertEquals(20, new ABIDecoder((result2[0].getResult()).copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
-        Assert.assertEquals(40, new ABIDecoder((result2[1].getResult()).copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder((result2[0].getResult()).copyOfTransactionOutput().get()).decodeOneInteger());
+        Assert.assertEquals(40, new ABIDecoder((result2[1].getResult()).copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -95,12 +95,12 @@ public class HotObjectTest {
         Assert.assertEquals(dapp1, dapp2);
 
         TransactionResult result = callDapp(kernel2, deployer, dapp2, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // execute same transaction on an earlier block
         result = callDapp(kernel1, deployer, dapp1, "doubleStaticValue");
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -118,13 +118,13 @@ public class HotObjectTest {
         byte[] objectGraph = kernel.getObjectGraph(dappAddress);
 
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         //reset the object graph
         kernel.putObjectGraph(dappAddress, objectGraph);
 
         result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -141,7 +141,7 @@ public class HotObjectTest {
 
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
 
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         //reset the object graph
         kernel.putObjectGraph(dappAddress, objectGraph);
@@ -150,7 +150,7 @@ public class HotObjectTest {
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -168,7 +168,7 @@ public class HotObjectTest {
 
         // add dapp to cache
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
@@ -181,7 +181,7 @@ public class HotObjectTest {
         kernel.setTransformedCode(dappAddress, new byte[0]);
 
         result = callDapp(kernel, deployer, dappAddress, "getStr");
-        Assert.assertEquals("initial", new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals("initial", new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
     }
 
     /**
@@ -199,7 +199,7 @@ public class HotObjectTest {
 
         // add dapp to cache
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
@@ -212,7 +212,7 @@ public class HotObjectTest {
         kernel.setTransformedCode(dappAddress, new byte[0]);
 
         result = callDapp(kernel, deployer, dappAddress, "getStr");
-        Assert.assertEquals("initial", new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals("initial", new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
     }
 
     /**
@@ -230,7 +230,7 @@ public class HotObjectTest {
 
         // add dapp to cache
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
@@ -244,7 +244,7 @@ public class HotObjectTest {
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddress, "getStr");
-        Assert.assertEquals("initial", new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals("initial", new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
     }
 
     /**
@@ -262,7 +262,7 @@ public class HotObjectTest {
 
         // add dapp to cache
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
@@ -275,7 +275,7 @@ public class HotObjectTest {
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddress, "getValue");
-        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(20, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -337,7 +337,7 @@ public class HotObjectTest {
             dappAddresses[i] = deploy(deployer, kernel, deployData);
             //add to cache
             TransactionResult result = callDapp(kernel, deployer, dappAddresses[i], "getValue");
-            Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
             kernel.generateBlock();
         }
 
@@ -360,12 +360,12 @@ public class HotObjectTest {
 
         //internal transaction result is not stored in the cache
         result = callDapp(kernel, deployer, dappAddresses[1], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddresses[0], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -385,7 +385,7 @@ public class HotObjectTest {
             dappAddresses[i] = deploy(deployer, kernel, deployData);
             //add to cache
             TransactionResult result = callDapp(kernel, deployer, dappAddresses[i], "getValue");
-            Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
             kernel.generateBlock();
         }
 
@@ -410,17 +410,17 @@ public class HotObjectTest {
 
         //internal transaction result is not stored in the cache
         result = callDapp(kernel, deployer, dappAddresses[1], "getCallCount");
-        Assert.assertEquals(0, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(0, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddresses[0], "getCallCount");
-        Assert.assertEquals(1, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(1, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddresses[0], "getValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     /**
@@ -463,7 +463,7 @@ public class HotObjectTest {
             Assert.assertTrue(r.transactionStatus.isSuccess());
             int[] expectedResult = new int[length];
             expectedResult[i] = 10;
-            Assert.assertArrayEquals(expectedResult, new ABIDecoder(r.copyOfTransactionOutput().orElseThrow()).decodeOneIntegerArray());
+            Assert.assertArrayEquals(expectedResult, new ABIDecoder(r.copyOfTransactionOutput().get()).decodeOneIntegerArray());
         }
     }
 
@@ -504,7 +504,7 @@ public class HotObjectTest {
             Assert.assertTrue(result.transactionStatus.isSuccess());
             int[] expectedResult = new int[length];
             expectedResult[i] = 10;
-            Assert.assertArrayEquals(expectedResult, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneIntegerArray());
+            Assert.assertArrayEquals(expectedResult, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneIntegerArray());
             kernel.generateBlock();
         }
     }
@@ -544,7 +544,7 @@ public class HotObjectTest {
             Transaction tx = AvmTransactionUtil.call(deployer, dappAddresses[i], kernel.getNonce(deployer), BigInteger.ZERO, data, energyLimit, energyPrice);
             TransactionResult result = avm.run(kernel, new Transaction[]{tx}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
             Assert.assertTrue(result.transactionStatus.isSuccess());
-            Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
         }
     }
 
@@ -556,7 +556,7 @@ public class HotObjectTest {
         AionAddress dappAddress = deploy(deployer, kernel, txData);
 
         TransactionResult result = callDapp(kernel, deployer, dappAddress, "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
@@ -586,7 +586,7 @@ public class HotObjectTest {
             dappAddresses[i] = deploy(deployer, kernel, deployData);
             //add to cache
             TransactionResult result = callDapp(kernel, deployer, dappAddresses[i], "getValue");
-            Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+            Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
             kernel.generateBlock();
         }
 
@@ -594,7 +594,7 @@ public class HotObjectTest {
         byte[] objectGraph = kernel.getObjectGraph(dappAddresses[1]);
 
         TransactionResult result = callDapp(kernel, deployer, dappAddresses[1], "doubleStaticValue");
-        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(10, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // update the cache
         byte[] data = new ABIStreamingEncoder().encodeOneString("revert").toBytes();
@@ -614,12 +614,12 @@ public class HotObjectTest {
 
         //read the cache
         result = callDapp(kernel, deployer, dappAddresses[1], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddresses[0], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     @Test
@@ -652,12 +652,12 @@ public class HotObjectTest {
 
         //read from the storage
         result = callDapp(kernel, deployer, dappAddresses[1], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddresses[0], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     @Test
@@ -690,12 +690,12 @@ public class HotObjectTest {
 
         //read from the storage
         result = callDapp(kernel, deployer, dappAddresses[1], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         kernel.generateBlock();
 
         result = callDapp(kernel, deployer, dappAddresses[0], "getValue");
-        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(5, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     private static long measureMethodExecutionTime(TestingState kernel, AionAddress dappAddress, String methodName, boolean generateBlock, int rounds) {
@@ -716,7 +716,7 @@ public class HotObjectTest {
         Transaction tx1 = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, txData, 5_000_000, energyPrice);
         TransactionResult result = avm.run(kernel, new Transaction[]{tx1}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private static TransactionResult callDapp(TestingState kernel, AionAddress sender, AionAddress dappAddress, String methodName, Object... args) {

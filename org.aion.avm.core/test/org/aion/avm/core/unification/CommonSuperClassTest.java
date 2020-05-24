@@ -71,7 +71,7 @@ public class CommonSuperClassTest {
         assertTrue(deploymentResult.transactionStatus.isSuccess());
 
         // We actually call the contract and interact with the types we received.
-        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().orElseThrow()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
+        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().get()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
         TransactionResult callResult = avm.run(KERNEL, new Transaction[] {call}, ExecutionType.ASSUME_MAINCHAIN, KERNEL.getBlockNumber()-1)[0].getResult();
         assertTrue(callResult.transactionStatus.isSuccess());
     }
@@ -119,7 +119,7 @@ public class CommonSuperClassTest {
         TransactionResult deploymentResult = avm.run(KERNEL, new Transaction[] {deployment}, ExecutionType.ASSUME_MAINCHAIN, KERNEL.getBlockNumber()-1)[0].getResult();
         assertTrue(deploymentResult.transactionStatus.isSuccess());
 
-        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().orElseThrow()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
+        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().get()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
         TransactionResult callResult = avm.run(KERNEL, new Transaction[] {call}, ExecutionType.ASSUME_MAINCHAIN, KERNEL.getBlockNumber()-1)[0].getResult();
         assertTrue(deploymentResult.transactionStatus.isSuccess());
         assertTrue(callResult.transactionStatus.isSuccess());
@@ -136,7 +136,7 @@ public class CommonSuperClassTest {
         assertTrue(deploymentResult.transactionStatus.isSuccess());
 
         // We actually call the contract and interact with the types we received.
-        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().orElseThrow()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
+        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().get()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
         TransactionResult callResult = avm.run(KERNEL, new Transaction[] {call}, ExecutionType.ASSUME_MAINCHAIN, KERNEL.getBlockNumber()-1)[0].getResult();
         assertTrue(deploymentResult.transactionStatus.isSuccess());
         assertTrue(callResult.transactionStatus.isSuccess());
@@ -164,7 +164,7 @@ public class CommonSuperClassTest {
         assertTrue(deploymentResult.transactionStatus.isSuccess());
 
         // We actually call the contract and interact with the types we received back from the ambiguous call.
-        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().orElseThrow()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
+        Transaction call = AvmTransactionUtil.call(DEPLOYER, new AionAddress(deploymentResult.copyOfTransactionOutput().get()), KERNEL.getNonce(DEPLOYER), BigInteger.ZERO, new byte[10], ENERGY_LIMIT, ENERGY_PRICE);
         TransactionResult callResult = avm.run(KERNEL, new Transaction[] {call}, ExecutionType.ASSUME_MAINCHAIN, KERNEL.getBlockNumber()-1)[0].getResult();
         assertTrue(deploymentResult.transactionStatus.isSuccess());
         assertTrue(callResult.transactionStatus.isSuccess());

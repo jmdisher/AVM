@@ -194,7 +194,7 @@ public class AvmImplTest {
         TransactionResult result1 = avm.run(kernel, new Transaction[] {tx1}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         assertTrue(result1.transactionStatus.isSuccess());
 
-        AionAddress contractAddr = new AionAddress(result1.copyOfTransactionOutput().orElseThrow());
+        AionAddress contractAddr = new AionAddress(result1.copyOfTransactionOutput().get());
 
         // Account for the cost:  deployment, clinit, init call.
         long basicCost = BillingRules.getBasicTransactionCost(txData);
@@ -210,7 +210,7 @@ public class AvmImplTest {
         Transaction tx2 = AvmTransactionUtil.call(deployer, contractAddr, kernel.getNonce(deployer), BigInteger.ZERO, contractAddr.toByteArray(), transaction2EnergyLimit, energyPrice);
         TransactionResult result2 = avm.run(kernel, new Transaction[] {tx2}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         assertTrue(result2.transactionStatus.isSuccess());
-        assertArrayEquals("CALL".getBytes(), result2.copyOfTransactionOutput().orElseThrow());
+        assertArrayEquals("CALL".getBytes(), result2.copyOfTransactionOutput().get());
         // Account for the cost:  (blocks in call method) + runtime.call
         //code block cost for initial call
         long costOfBlocks = 51l + 31l + 333l;
@@ -616,7 +616,7 @@ public class AvmImplTest {
 
         TransactionResult createResult = createDAppCanFail(kernel, avm, spawnerCreateData);
         assertTrue(createResult.transactionStatus.isSuccess());
-        AionAddress spawnerAddress = new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        AionAddress spawnerAddress = new AionAddress(createResult.copyOfTransactionOutput().get());
         assertNotNull(spawnerAddress);
         avm.shutdown();
     }
@@ -642,7 +642,7 @@ public class AvmImplTest {
         Transaction call = AvmTransactionUtil.call(deployer, contractAddr, externalState.getNonce(deployer), BigInteger.ZERO, argData, energyLimit, 1L);
         TransactionResult result = avm.run(externalState, new Transaction[] {call}, ExecutionType.ASSUME_MAINCHAIN, externalState.getBlockNumber() - 1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger();
+        return new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger();
     }
 
     private int callReentrantAccess(IExternalState externalState, AvmImpl avm, AionAddress contractAddr, String methodName, boolean shouldFail) {
@@ -653,7 +653,7 @@ public class AvmImplTest {
     private AionAddress createDApp(IExternalState externalState, AvmImpl avm, byte[] createData) {
         TransactionResult result1 = createDAppCanFail(externalState, avm, createData);
         assertTrue(result1.transactionStatus.isSuccess());
-        return new AionAddress(result1.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result1.copyOfTransactionOutput().get());
     }
 
     private TransactionResult createDAppCanFail(IExternalState externalState, AvmImpl avm, byte[] createData) {
@@ -693,7 +693,7 @@ public class AvmImplTest {
         Transaction tx = AvmTransactionUtil.call(deployer, dAppAddress, externalState.getNonce(deployer), BigInteger.ZERO, argData, energyLimit, 1L);
         TransactionResult result2 = avm.run(externalState, new Transaction[] {tx}, ExecutionType.ASSUME_MAINCHAIN, externalState.getBlockNumber() - 1)[0].getResult();
         assertTrue(result2.transactionStatus.isSuccess());
-        return result2.copyOfTransactionOutput().orElseThrow();
+        return result2.copyOfTransactionOutput().get();
     }
 
     private void deployInvalidJar(byte[] jar) {

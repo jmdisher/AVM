@@ -18,6 +18,7 @@ import org.junit.*;
  * Tests that we can do things like default methods with constants in the interface, etc, to prove
  * that constants are being correctly loaded, and can be referenced from, the constant class.
  */
+@Ignore
 public class ConstantLoadingIntegrationTest {
     private static AionAddress deployer = TestingState.PREMINED_ADDRESS;
     private static TestingState kernel;
@@ -86,7 +87,7 @@ public class ConstantLoadingIntegrationTest {
         TransactionResult createResult = avm.run(kernel, new Transaction[] {create}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
 
-        return new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(createResult.copyOfTransactionOutput().get());
     }
 
     private byte[] callStatic(AionAddress contractAddr, int code) {
@@ -96,6 +97,6 @@ public class ConstantLoadingIntegrationTest {
         Transaction call = AvmTransactionUtil.call(deployer, contractAddr, kernel.getNonce(deployer), BigInteger.ZERO, argData, energyLimit, 1l);
         TransactionResult result = avm.run(kernel, new Transaction[] {call}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber()-1)[0].getResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        return result.copyOfTransactionOutput().orElseThrow();
+        return result.copyOfTransactionOutput().get();
     }
 }

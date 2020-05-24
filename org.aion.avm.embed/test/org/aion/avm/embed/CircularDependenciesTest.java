@@ -24,6 +24,7 @@ import org.junit.Test;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 public class CircularDependenciesTest {
     @ClassRule
@@ -128,7 +129,7 @@ public class CircularDependenciesTest {
          ClassWriter classWriter = new ClassWriter(0);
          MethodVisitor methodVisitor;
 
-         classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "b/Child$Parent", null, "java/lang/Object", null);
+         classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "b/Child$Parent", null, "java/lang/Object", null);
          classWriter.visitSource("Child.java", null);
          classWriter.visitInnerClass("b/Child$Parent", "b/Child", "Parent", ACC_PUBLIC | ACC_STATIC);
 
@@ -174,7 +175,7 @@ public class CircularDependenciesTest {
 
          ClassWriter classWriter = new ClassWriter(0);
          MethodVisitor methodVisitor;
-         classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "b/Child", null, "b/Child$Parent", null);
+         classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "b/Child", null, "b/Child$Parent", null);
 
          classWriter.visitSource("Child.java", null);
 

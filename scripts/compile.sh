@@ -24,10 +24,11 @@ fi
 # clean
 echo "Cleaning the build folder..."
 rm -fr "./build"
+mkdir "./build"
 
 # compile
 echo "Compiling the source code..."
-$JAVAC --release 10 -cp "./lib/*" -d "./build" "${@:2}"  || exit 3
+$JAVAC -source 1.8 -target 1.8 -cp "./lib/*" -d "./build" "${@:2}"  || exit 3
 
 # assemble the bytecode
 echo "Assembling the final jar..."

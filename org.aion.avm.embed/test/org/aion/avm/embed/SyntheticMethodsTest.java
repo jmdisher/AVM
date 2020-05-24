@@ -39,7 +39,7 @@ public class SyntheticMethodsTest {
         TransactionResult result = createAndRunTransaction("getCompareResult");
 
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(SyntheticMethodsTestTarget.DEFAULT_VALUE, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(SyntheticMethodsTestTarget.DEFAULT_VALUE, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     @Test
@@ -48,22 +48,22 @@ public class SyntheticMethodsTest {
         TransactionResult result1 = createAndRunTransaction("compareSomething", 1);
         Assert.assertTrue(result1.transactionStatus.isSuccess());
         TransactionResult result1Value = createAndRunTransaction("getCompareResult");
-        Assert.assertEquals(1, new ABIDecoder(result1Value.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(1, new ABIDecoder(result1Value.copyOfTransactionOutput().get()).decodeOneInteger());
 
         TransactionResult result2 = createAndRunTransaction("compareSomething", 2);
         Assert.assertTrue(result2.transactionStatus.isSuccess());
         TransactionResult result2Value = createAndRunTransaction("getCompareResult");
-        Assert.assertEquals(0, new ABIDecoder(result2Value.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(0, new ABIDecoder(result2Value.copyOfTransactionOutput().get()).decodeOneInteger());
 
         TransactionResult result3 = createAndRunTransaction("compareSomething", 3);
         Assert.assertTrue(result3.transactionStatus.isSuccess());
         TransactionResult result3Value = createAndRunTransaction("getCompareResult");
-        Assert.assertEquals(-1, new ABIDecoder(result3Value.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(-1, new ABIDecoder(result3Value.copyOfTransactionOutput().get()).decodeOneInteger());
 
         TransactionResult result4 = createAndRunTransaction("compareSomething", 4);
         Assert.assertTrue(result4.transactionStatus.isSuccess());
         TransactionResult result4Value = createAndRunTransaction("getCompareResult");
-        Assert.assertEquals(100, new ABIDecoder(result4Value.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(100, new ABIDecoder(result4Value.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class SyntheticMethodsTest {
         // check for correctness in synthetic, should get impl1 name
         TransactionResult result2 = createAndRunTransaction("getName");
         Assert.assertTrue(result2.transactionStatus.isSuccess());
-        Assert.assertEquals("TargetClassImplOne", new ABIDecoder(result2.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals("TargetClassImplOne", new ABIDecoder(result2.copyOfTransactionOutput().get()).decodeOneString());
 
         // pick target2Impl
         TransactionResult result3 = createAndRunTransaction("pickTarget", 2);
@@ -84,7 +84,7 @@ public class SyntheticMethodsTest {
         // check for correctness in synthetic, should get abstract name
         TransactionResult result4 = createAndRunTransaction("getName");
         Assert.assertTrue(result4.transactionStatus.isSuccess());
-        Assert.assertEquals("TargetAbstractClass", new ABIDecoder(result4.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals("TargetAbstractClass", new ABIDecoder(result4.copyOfTransactionOutput().get()).decodeOneString());
     }
 
     @Test
@@ -100,15 +100,15 @@ public class SyntheticMethodsTest {
         // retrieve each object
         TransactionResult result2 = createAndRunTransaction("getIntGen");
         Assert.assertTrue(result2.transactionStatus.isSuccess());
-        Assert.assertEquals(inputGeneric, new ABIDecoder(result2.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(inputGeneric, new ABIDecoder(result2.copyOfTransactionOutput().get()).decodeOneInteger());
 
         TransactionResult result3 = createAndRunTransaction("getIntGenSub");
         Assert.assertTrue(result3.transactionStatus.isSuccess());
-        Assert.assertEquals(inputOverrideGeneric, new ABIDecoder(result3.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(inputOverrideGeneric, new ABIDecoder(result3.copyOfTransactionOutput().get()).decodeOneInteger());
 
         TransactionResult result4 = createAndRunTransaction("getSubCopy");
         Assert.assertTrue(result4.transactionStatus.isSuccess());
-        Assert.assertEquals(inputOverrideGeneric, new ABIDecoder(result4.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(inputOverrideGeneric, new ABIDecoder(result4.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     private TransactionResult createAndRunTransaction(String methodName, Object ... args){

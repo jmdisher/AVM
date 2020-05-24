@@ -90,7 +90,7 @@ public class TrsTest {
             assertTrue(result.transactionStatus.isSuccess());
 
             // Check the return value is true, indicating a non-zero withdrawal amount.
-            assertTrue(new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+            assertTrue(new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneBoolean());
 
             // Update the account balance by deducting the transaction cost from the previous balance.
             long callCost = result.energyUsed * ENERGY_PRICE;

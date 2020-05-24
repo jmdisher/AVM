@@ -19,7 +19,7 @@ class ReflectionBenchmarkConstants {
     static int uniqueSpins = 1;
 
     static String targetClassName = ReflectionTarget.class.getCanonicalName();
-    static File classpathDirectory = new File(System.getProperty("user.dir") + "/" + ReflectionTarget.class.getPackageName() + "/");
+    static File classpathDirectory = new File(System.getProperty("user.dir") + "/" + ReflectionTarget.class.getPackage().getName() + "/");
 
     static String staticField = "staticField3";
     static String instanceField = "instanceField2";

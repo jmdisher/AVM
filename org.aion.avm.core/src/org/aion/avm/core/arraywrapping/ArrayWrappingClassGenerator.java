@@ -113,7 +113,7 @@ public class ArrayWrappingClassGenerator implements Opcodes {
 
     private static byte[] generateInterfaceBytecode(String wrapperInterfaceSlashName, String[] superInterfaces) {
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        classWriter.visit(V10, ACC_PUBLIC | ACC_ABSTRACT | ACC_INTERFACE , wrapperInterfaceSlashName, null, "java/lang/Object", superInterfaces);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_ABSTRACT | ACC_INTERFACE , wrapperInterfaceSlashName, null, "java/lang/Object", superInterfaces);
         classWriter.visitEnd();
         return classWriter.toByteArray();
     }
@@ -177,7 +177,7 @@ public class ArrayWrappingClassGenerator implements Opcodes {
 
     private static byte[] generateClassBytecode(String wrapperClassSlashName, String superClassSlashName, int dimensions, String[] superInterfaceSlashNames){
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, wrapperClassSlashName, null, superClassSlashName, superInterfaceSlashNames);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, wrapperClassSlashName, null, superClassSlashName, superInterfaceSlashNames);
         // Static factory for one dimensional array
         // We always generate one D factory for corner case like int[][][] a = new int[10][][];
         genSingleDimensionFactory(classWriter, wrapperClassSlashName, 1);

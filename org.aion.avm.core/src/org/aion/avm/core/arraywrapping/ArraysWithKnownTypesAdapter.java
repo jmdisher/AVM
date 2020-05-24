@@ -1,7 +1,10 @@
 package org.aion.avm.core.arraywrapping;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 import a.*;
 import i.PackageConstants;
 import i.RuntimeAssertionError;
@@ -56,10 +59,10 @@ class ArraysWithKnownTypesAdapter extends AdviceAdapter {
     private Type typeLA = Type.getType(LongArray.class);
     private Type typeSA = Type.getType(ShortArray.class);
 
-    private static final Set<String> SHADOW_JDK_ENUM_DESC = Set.of(new String[] {
+    private static final Set<String> SHADOW_JDK_ENUM_DESC = Arrays.stream(new String[] {
             "()[Ls/java/math/RoundingMode;",
             "()[Ls/java/util/concurrent/TimeUnit;",
-    });
+    }).collect(Collectors.toSet());
 
 
     ArraysWithKnownTypesAdapter(final MethodVisitor mv, final int access, final String name, final String desc)
@@ -282,7 +285,7 @@ class ArraysWithKnownTypesAdapter extends AdviceAdapter {
     }
 
     private Object[] updateBootstrapMethodArguments(Object[] origArgs) {
-        final var newArgs = new ArrayList<>(origArgs.length);
+        final ArrayList<Object> newArgs = new ArrayList<>(origArgs.length);
         for (final Object origArg : origArgs) {
             final Object newArg;
             if (origArg instanceof Type) {

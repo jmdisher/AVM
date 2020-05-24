@@ -63,7 +63,7 @@ public class Forest<I, C> {
     // Prune the Forest and only keep the trees of the 'newRoots' roots.
     public void prune(Collection<Node<I, C>> newRoots) {
         Objects.requireNonNull(newRoots);
-        final var pruneVisitor = new Visitor<I, C>() {
+        final Visitor<I, C> pruneVisitor = new Visitor<I, C>() {
             @Override
             public void onVisitRoot(Node<I, C> root) {
                 nodesIndex.remove(root.getId());

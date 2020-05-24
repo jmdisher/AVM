@@ -17,18 +17,6 @@ public class BootstrapsCannotBeCalledTest {
     private Address deployer = avmRule.getPreminedAccount();
 
     @Test
-    public void testStringConcatFactoryMakeConcat() {
-        TransactionResult result = deployContract(MakeConcatTarget.class);
-        assertTrue(result.transactionStatus.isFailed());
-    }
-
-    @Test
-    public void testStringConcatFactoryMakeConcatWithConstants() {
-        TransactionResult result = deployContract(MakeConcatWithConstantsTarget.class);
-        assertTrue(result.transactionStatus.isFailed());
-    }
-
-    @Test
     public void testLambdaMetaFactory() {
         TransactionResult result = deployContract(MetaFactoryTarget.class);
         assertTrue(result.transactionStatus.isFailed());

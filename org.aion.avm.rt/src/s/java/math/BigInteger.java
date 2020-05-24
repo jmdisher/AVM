@@ -14,22 +14,14 @@ public class BigInteger extends Number implements Comparable<BigInteger> {
         IInstrumentation.attachedThreadInstrumentation.get().bootstrapOnly();
     }
 
-    public BigInteger(ByteArray val, int off, int len) {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.BigInteger_avm_constructor);
-        setUnderlying(new java.math.BigInteger(val.getUnderlying(), off, len));
-    }
-
     public BigInteger(ByteArray val) {
-        this(val, 0, val.length());
-    }
-
-    public BigInteger(int signum, ByteArray magnitude, int off, int len) {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.BigInteger_avm_constructor_2);
-        setUnderlying(new java.math.BigInteger(signum, magnitude.getUnderlying(), off, len));
+        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.BigInteger_avm_constructor);
+        setUnderlying(new java.math.BigInteger(val.getUnderlying()));
     }
 
     public BigInteger(int signum, ByteArray magnitude) {
-        this(signum, magnitude, 0, magnitude.length());
+        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.BigInteger_avm_constructor_2);
+        setUnderlying(new java.math.BigInteger(signum, magnitude.getUnderlying()));
     }
 
     public BigInteger(String val, int radix) {
@@ -49,8 +41,6 @@ public class BigInteger extends Number implements Comparable<BigInteger> {
     public static final BigInteger avm_ZERO = new BigInteger(java.math.BigInteger.ZERO, new ConstantToken(ShadowClassConstantId.BigInteger_avm_ZERO));
 
     public static final BigInteger avm_ONE = new BigInteger(java.math.BigInteger.ONE, new ConstantToken(ShadowClassConstantId.BigInteger_avm_ONE));
-
-    public static final BigInteger avm_TWO = new BigInteger(java.math.BigInteger.TWO, new ConstantToken(ShadowClassConstantId.BigInteger_avm_TWO));
 
     public static final BigInteger avm_TEN = new BigInteger(java.math.BigInteger.TEN, new ConstantToken(ShadowClassConstantId.BigInteger_avm_TEN));
 
@@ -87,12 +77,6 @@ public class BigInteger extends Number implements Comparable<BigInteger> {
         lazyLoad();
         val.lazyLoad();
         return new BigInteger(v.remainder(val.v));
-    }
-
-    public BigInteger avm_sqrt() {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.BigInteger_avm_sqrt);
-        lazyLoad();
-        return new BigInteger(v.sqrt());
     }
 
     public BigInteger avm_gcd(BigInteger val) {

@@ -68,7 +68,7 @@ public class PerformanceTest {
             Transaction create = AvmTransactionUtil.create(userAddress, kernel.getNonce(userAddress), BigInteger.ZERO, txData, energyLimit, energyPrice);
             TransactionResult createResult = avm.run(this.kernel, new Transaction[]{create}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
             Assert.assertTrue(createResult.transactionStatus.isSuccess());
-            AionAddress contractAddr = new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+            AionAddress contractAddr = new AionAddress(createResult.copyOfTransactionOutput().get());
             contractAddrs[i] = contractAddr;
         }
 
@@ -174,7 +174,7 @@ public class PerformanceTest {
                 TransactionResult result = future.getResult();
                 Assert.assertTrue(result.transactionStatus.isSuccess());
                 // These should all return an empty byte[] (void).
-                Assert.assertEquals(0, result.copyOfTransactionOutput().orElseThrow().length);
+                Assert.assertEquals(0, result.copyOfTransactionOutput().get().length);
             }
         }
     }

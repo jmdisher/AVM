@@ -70,7 +70,7 @@ public class PocExchangeTest {
             Transaction createTransaction = AvmTransactionUtil.create(minter, kernel.getNonce(minter), BigInteger.ZERO, new CodeAndArguments(jar, arguments).encodeToBytes(), energyLimit, 1L);
             TransactionResult createResult = avm.run(kernel, new Transaction[] {createTransaction}, ExecutionType.ASSUME_MAINCHAIN, 0)[0].getResult();
             Assert.assertTrue(createResult.transactionStatus.isSuccess());
-            return new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+            return new AionAddress(createResult.copyOfTransactionOutput().get());
         }
 
         public TransactionResult callTotalSupply() {
@@ -130,7 +130,7 @@ public class PocExchangeTest {
             Transaction createTransaction = AvmTransactionUtil.create(owner, kernel.getNonce(owner), BigInteger.ZERO, new CodeAndArguments(jar, arguments).encodeToBytes(), energyLimit, 1L);
             TransactionResult createResult = avm.run(kernel, new Transaction[] {createTransaction}, ExecutionType.ASSUME_MAINCHAIN, 0)[0].getResult();
             Assert.assertTrue(createResult.transactionStatus.isSuccess());
-            return new AionAddress(createResult.copyOfTransactionOutput().orElseThrow());
+            return new AionAddress(createResult.copyOfTransactionOutput().get());
         }
 
         public TransactionResult callListCoin(String name, AionAddress coinAddr) {
@@ -163,55 +163,55 @@ public class PocExchangeTest {
         CoinContract pepe = new CoinContract(null, pepeMinter, testERC20Jar, arguments);
 
         res = pepe.callTotalSupply();
-        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callBalanceOf(usr1);
-        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callBalanceOf(usr2);
-        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callMint(usr1, 5000L);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = pepe.callBalanceOf(usr1);
-        Assert.assertEquals(5000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(5000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callMint(usr2, 10000L);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = pepe.callBalanceOf(usr2);
-        Assert.assertEquals(10000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(10000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callTransfer(usr1, usr2, 2000L);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = pepe.callBalanceOf(usr1);
-        Assert.assertEquals(3000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(3000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callBalanceOf(usr2);
-        Assert.assertEquals(12000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(12000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callAllowance(usr1, usr2);
-        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(0L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callApprove(usr1, usr3, 1000L);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = pepe.callAllowance(usr1, usr3);
-        Assert.assertEquals(1000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(1000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callTransferFrom(usr3, usr1, usr2, 500L);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = pepe.callAllowance(usr1, usr3);
-        Assert.assertEquals(500L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(500L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callBalanceOf(usr1);
-        Assert.assertEquals(2500L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(2500L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callBalanceOf(usr2);
-        Assert.assertEquals(12500L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(12500L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
     }
 
     @Test
@@ -227,30 +227,30 @@ public class PocExchangeTest {
         TransactionResult res;
 
         res = ex.callListCoin("PEPE", pepe.addr);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = ex.callListCoin("MEME", meme.addr);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = pepe.callMint(usr1, 5000L);
         res = pepe.callMint(usr2, 5000L);
 
         res = pepe.callApprove(usr1, ex.addr, 2000L);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = ex.callRequestTransfer("PEPE", usr1, usr2, 1000L);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = ex.callProcessExchangeTransaction(exchangeOwner);
-        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneBoolean());
+        Assert.assertEquals(true, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneBoolean());
 
         res = pepe.callBalanceOf(usr1);
-        Assert.assertEquals(4000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(4000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callBalanceOf(usr2);
-        Assert.assertEquals(6000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(6000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
 
         res = pepe.callAllowance(usr1, ex.addr);
-        Assert.assertEquals(1000L, new ABIDecoder(res.copyOfTransactionOutput().orElseThrow()).decodeOneLong());
+        Assert.assertEquals(1000L, new ABIDecoder(res.copyOfTransactionOutput().get()).decodeOneLong());
     }
 }

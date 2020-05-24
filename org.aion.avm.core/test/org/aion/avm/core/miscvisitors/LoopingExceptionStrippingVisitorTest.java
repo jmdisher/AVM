@@ -20,7 +20,7 @@ public class LoopingExceptionStrippingVisitorTest {
         TryCatchCountingVisitor counter = new TryCatchCountingVisitor(writer);
         LoopingExceptionStrippingVisitor visitor = new LoopingExceptionStrippingVisitor();
         visitor.setDelegate(counter);
-        visitor.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
+        visitor.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
         
         // Create our labels.
         Label start = new Label();
@@ -58,7 +58,7 @@ public class LoopingExceptionStrippingVisitorTest {
         TryCatchCountingVisitor counter = new TryCatchCountingVisitor(writer);
         LoopingExceptionStrippingVisitor visitor = new LoopingExceptionStrippingVisitor();
         visitor.setDelegate(counter);
-        visitor.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
+        visitor.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
         
         // Create our labels.
         Label start = new Label();
@@ -94,7 +94,7 @@ public class LoopingExceptionStrippingVisitorTest {
         TryCatchCountingVisitor counter = new TryCatchCountingVisitor(writer);
         LoopingExceptionStrippingVisitor visitor = new LoopingExceptionStrippingVisitor();
         visitor.setDelegate(counter);
-        visitor.visit(Opcodes.V10, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
+        visitor.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, testClassName, null, "java/lang/Object", null);
         
         // Create our labels.
         Label methodStart = new Label();

@@ -208,7 +208,7 @@ public class HeapMemoryCostCalculator {
             final String slashName = Utilities.fulllyQualifiedNameToInternalName(rootClass.getId());
             rootHeapSizeMap.put(slashName, rootClassObjectSizes.get(slashName));
         }
-        final var visitor = new Forest.Visitor<String, ClassInfo>() {
+        final Forest.Visitor<String, ClassInfo> visitor = new Forest.Visitor<String, ClassInfo>() {
             @Override
             public void onVisitRoot(Node<String, ClassInfo> root) {
             }

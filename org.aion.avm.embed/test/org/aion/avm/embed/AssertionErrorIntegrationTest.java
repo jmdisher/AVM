@@ -110,18 +110,18 @@ public class AssertionErrorIntegrationTest {
         // Deploy.
         TransactionResult createResult = avmRule.deploy(avmRule.getPreminedAccount(), BigInteger.ZERO, txData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(createResult.transactionStatus.isSuccess());
-        return new Address(createResult.copyOfTransactionOutput().orElseThrow());
+        return new Address(createResult.copyOfTransactionOutput().get());
     }
 
     private String callStaticString(Address dapp, String methodName, Object... arguments) {
         byte[] argData = ABIUtil.encodeMethodArguments(methodName, arguments);
         TransactionResult result = avmRule.call(avmRule.getPreminedAccount(), dapp, BigInteger.ZERO, argData, ENERGY_LIMIT, ENERGY_PRICE).getTransactionResult();
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        byte[] resultData = result.copyOfTransactionOutput().orElseThrow();
+        byte[] resultData = result.copyOfTransactionOutput().get();
         if(null == resultData) {
             return null;
         }
-        byte[] utf8 = new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneByteArray();
+        byte[] utf8 = new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneByteArray();
         return (null != utf8)
                 ? new String(utf8)
                 : null;

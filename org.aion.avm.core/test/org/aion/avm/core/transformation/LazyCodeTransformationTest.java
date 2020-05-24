@@ -59,12 +59,12 @@ public class LazyCodeTransformationTest {
         encoder = new ABIStreamingEncoder().encodeOneString("getName");
         result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(newName, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals(newName, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
 
         encoder = new ABIStreamingEncoder().encodeOneString("getChangeCount");
         result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(1, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(1, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
 
         // set TransformedCode to null so that the stored DApp code is re-transformed
         kernel.setTransformedCode(dappAddress, null);
@@ -73,12 +73,12 @@ public class LazyCodeTransformationTest {
         encoder = new ABIStreamingEncoder().encodeOneString("getName");
         result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(newName, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals(newName, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
 
         encoder = new ABIStreamingEncoder().encodeOneString("getChangeCount");
         result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(1, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneInteger());
+        Assert.assertEquals(1, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneInteger());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class LazyCodeTransformationTest {
         ABIStreamingEncoder encoder = new ABIStreamingEncoder().encodeOneString("getName");
         TransactionResult result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class LazyCodeTransformationTest {
         ABIStreamingEncoder encoder = new ABIStreamingEncoder().encodeOneString("getName");
         TransactionResult result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
         Assert.assertArrayEquals(transformedCode, kernel.getTransformedCode(dappAddress));
     }
 
@@ -134,7 +134,7 @@ public class LazyCodeTransformationTest {
         ABIStreamingEncoder encoder = new ABIStreamingEncoder().encodeOneString("getName");
         TransactionResult result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
 
         // transformed code should be in cache now
         kernel.generateBlock();
@@ -143,7 +143,7 @@ public class LazyCodeTransformationTest {
         encoder = new ABIStreamingEncoder().encodeOneString("getName");
         result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
     }
 
     @Test
@@ -154,7 +154,7 @@ public class LazyCodeTransformationTest {
         ABIStreamingEncoder encoder = new ABIStreamingEncoder().encodeOneString("getName");
         TransactionResult result = callDapp(kernel, from, dappAddress, encoder.toBytes(), kernel.getBlockNumber() - 1);
         Assert.assertTrue(result.transactionStatus.isSuccess());
-        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().orElseThrow()).decodeOneString());
+        Assert.assertEquals(initialNameValue, new ABIDecoder(result.copyOfTransactionOutput().get()).decodeOneString());
 
         kernel.generateBlock();
         kernel.setTransformedCode(dappAddress, null);
@@ -207,7 +207,7 @@ public class LazyCodeTransformationTest {
         Transaction tx1 = AvmTransactionUtil.create(deployer, kernel.getNonce(deployer), BigInteger.ZERO, txData, 5_000_000, 1);
         TransactionResult result = avm.run(kernel, new Transaction[]{tx1}, ExecutionType.ASSUME_MAINCHAIN, kernel.getBlockNumber() - 1)[0].getResult();
         assertTrue(result.transactionStatus.isSuccess());
-        return new AionAddress(result.copyOfTransactionOutput().orElseThrow());
+        return new AionAddress(result.copyOfTransactionOutput().get());
     }
 
     private static TransactionResult callDapp(TestingState kernel, AionAddress sender, AionAddress dappAddress, byte[] data, long commonMainchainBlockNumber) {

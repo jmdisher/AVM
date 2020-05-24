@@ -161,16 +161,6 @@ public final class StrictMath extends Object {
         return java.lang.StrictMath.toIntExact(value);
     }
 
-    public static long avm_multiplyFull(int x, int y) {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_multiplyFull);
-        return java.lang.StrictMath.multiplyFull(x, y);
-    }
-
-    public static long avm_multiplyHigh(long x, long y) {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_multiplyHigh);
-        return java.lang.StrictMath.multiplyHigh(x, y);
-    }
-
     public static int avm_floorDiv(int x, int y) {
         IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_floorDiv);
         return java.lang.StrictMath.floorDiv(x, y);
@@ -188,11 +178,6 @@ public final class StrictMath extends Object {
 
     public static int avm_floorMod(int x, int y) {
         IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_floorMod);
-        return java.lang.StrictMath.floorMod(x , y);
-    }
-
-    public static int avm_floorMod(long x, int y) {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_floorMod_1);
         return java.lang.StrictMath.floorMod(x , y);
     }
 
@@ -259,16 +244,6 @@ public final class StrictMath extends Object {
     public static double avm_min(double a, double b) {
         IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_min_3);
         return java.lang.StrictMath.min(a, b);
-    }
-
-    public static double avm_fma(double a, double b, double c) {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_fma);
-        return java.lang.StrictMath.fma(a, b, c);
-    }
-
-    public static float avm_fma(float a, float b, float c) {
-        IInstrumentation.attachedThreadInstrumentation.get().chargeEnergy(RuntimeMethodFeeSchedule.StrictMath_avm_fma_1);
-        return java.lang.StrictMath.fma(a, b, c);
     }
 
     public static double avm_ulp(double d) {

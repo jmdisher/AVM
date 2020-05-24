@@ -22,7 +22,7 @@ import org.objectweb.asm.Opcodes;
  * Note that class names here are always in the slash style:  "java/lang/Object".
  */
 public class StubGenerator {
-    private static final int CLASS_VERSION = 54;
+    private static final int CLASS_VERSION = 52;
     private static final String INIT_NAME = "<init>";
     private static final String ONE_ARG_DESCRIPTOR = "(Ljava/lang/Object;)V";
     

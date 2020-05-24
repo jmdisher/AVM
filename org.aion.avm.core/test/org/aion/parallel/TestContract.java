@@ -101,7 +101,6 @@ public class TestContract {
             byte[] n = new byte[32];
             Arrays.fill(n, 0, 32, Byte.MAX_VALUE);
             StrictMath.sqrt(Double.MAX_VALUE);
-            new BigInteger(n).sqrt();
             i++;
         }
         return Blockchain.getBalance(address);

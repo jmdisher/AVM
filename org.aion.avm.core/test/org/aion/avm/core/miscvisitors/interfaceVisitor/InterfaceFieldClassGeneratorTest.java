@@ -13,6 +13,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -353,7 +354,7 @@ public class InterfaceFieldClassGeneratorTest {
         ClassWriter classWriter = new ClassWriter(0);
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "NestedInterfaces", null, "java/lang/Object", null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "NestedInterfaces", null, "java/lang/Object", null);
 
         classWriter.visitSource("NestedInterfaces.java", null);
 
@@ -382,7 +383,7 @@ public class InterfaceFieldClassGeneratorTest {
         ClassWriter classWriter = new ClassWriter(0);
         FieldVisitor fieldVisitor;
 
-        classWriter.visit(V10, ACC_ABSTRACT | ACC_INTERFACE, "NestedInterfaces$FIELDS", null, "java/lang/Object", null);
+        classWriter.visit(Opcodes.V1_8, ACC_ABSTRACT | ACC_INTERFACE, "NestedInterfaces$FIELDS", null, "java/lang/Object", null);
 
         classWriter.visitSource("NestedInterfaces.java", null);
 
@@ -405,7 +406,7 @@ public class InterfaceFieldClassGeneratorTest {
         FieldVisitor fieldVisitor;
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_ABSTRACT | ACC_INTERFACE, "NestedInterfaces$FIELDS$FIELDS", null, "java/lang/Object", null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_ABSTRACT | ACC_INTERFACE, "NestedInterfaces$FIELDS$FIELDS", null, "java/lang/Object", null);
 
         classWriter.visitSource("NestedInterfaces.java", null);
 
@@ -442,7 +443,7 @@ public class InterfaceFieldClassGeneratorTest {
         ClassWriter classWriter = new ClassWriter(0);
         MethodVisitor methodVisitor;
 
-        classWriter.visit(V10, ACC_PUBLIC | ACC_SUPER, "NestedMain", null, "java/lang/Object", null);
+        classWriter.visit(Opcodes.V1_8, ACC_PUBLIC | ACC_SUPER, "NestedMain", null, "java/lang/Object", null);
 
         classWriter.visitSource("NestedMain.java", null);
 

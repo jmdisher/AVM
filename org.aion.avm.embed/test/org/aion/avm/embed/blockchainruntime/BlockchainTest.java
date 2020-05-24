@@ -42,7 +42,7 @@ public class BlockchainTest {
         ByteBuffer returnData = getReturnData(dappAddress, txData);
 
         byte[] expected = Arrays.copyOfRange(returnData.array(), 0, returnData.position());
-        assertArrayEquals(expected, result.getTransactionResult().copyOfTransactionOutput().orElseThrow());
+        assertArrayEquals(expected, result.getTransactionResult().copyOfTransactionOutput().get());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class BlockchainTest {
 
         assertTrue(result.getReceiptStatus().isSuccess());
         // We expect it to handle all the exceptions and return the data we initially sent in.
-        assertArrayEquals(txData, result.getTransactionResult().copyOfTransactionOutput().orElseThrow());
+        assertArrayEquals(txData, result.getTransactionResult().copyOfTransactionOutput().get());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class BlockchainTest {
 
         ByteBuffer returnData = getReturnData(dappAddress, txData);
         byte[] expected = Arrays.copyOfRange(returnData.array(), 0, returnData.position());
-        assertArrayEquals(expected, result.getTransactionResult().copyOfTransactionOutput().orElseThrow());
+        assertArrayEquals(expected, result.getTransactionResult().copyOfTransactionOutput().get());
     }
 
     private Address installJarAsDApp(byte[] jar) {
